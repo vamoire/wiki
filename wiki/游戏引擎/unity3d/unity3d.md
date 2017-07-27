@@ -1,5 +1,56 @@
 # unity3d
 
+## 碰撞
+
+在unity3d中，能检测碰撞发生的方式有两种，一种是利用碰撞器，另一种则是利用触发器。这两种方式的应用非常广泛。为了完整的了解这两种方式，我们必须理解以下概念：
+    （一）碰撞器是一群组件，它包含了很多种类，比如：Box Collider，Capsule Collider等，这些碰撞器应用的场合不同，但都必须加到GameObjecet身上。
+    （二）所谓触发器，只需要在检视面板中的碰撞器组件中勾选IsTrigger属性选择框。
+    （三）在Unity3d中，主要有以下接口函数来处理这两种碰撞检测：
+
+触发信息检测：
+1.MonoBehaviour.OnTriggerEnter( Collider other )当进入触发器
+2.MonoBehaviour.OnTriggerExit( Collider other )当退出触发器
+3.MonoBehaviour.OnTriggerStay( Collider other )当逗留触发器
+
+碰撞信息检测：
+1.MonoBehaviour.OnCollisionEnter( Collision collisionInfo ) 当进入碰撞器
+2.MonoBehaviour.OnCollisionExit( Collision collisionInfo ) 当退出碰撞器
+3.MonoBehaviour.OnCollisionStay( Collision collisionInfo )  当逗留碰撞器
+
+Unity2D:
+MonoBehaviour.OnTriggerEnter2D( Collider2D other )
+
+
+![image](res/触发器.png)
+
+
+## 查找子对象
+<pre>
+var temp = transform.Find("InfoText");
+</pre>
+
+## 添加预设体
+<pre>
+GameObject obj = (GameObject)Instantiate (Resources.Load ("BodyS"));
+GameObject node = GameObject.Find ("Main Camera");
+obj.transform.parent = node.transform;
+</pre>
+
+## 删除对象
+<pre>
+Destroy(gameObject)
+</pre>
+
+## 脚本所在的对象
+<pre>
+this.gameObject
+</pre>
+
+
+## 查找对象上的脚本/组件
+<pre>
+<xmp>Player info = obj.GetComponent<Player>();</xmp>
+</pre>
 
 ## 获取MAC地址
 <pre>

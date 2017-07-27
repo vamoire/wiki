@@ -8,9 +8,9 @@ namespace XiaJiaJia {
 	public enum MessageCode{
 		Unknow = -1,	//未知
 		SendMessage = 0,//发送消息
-		PlayerStatus = 100,		//角色状态
-		PlayerInfo = 200,		//角色信息
-		PlayerAttack = 300,		//攻击
+		PlayerInfo = 100,	//角色信息
+		AttackInfo = 200,	//攻击消息
+		AttackDestroy = 300,//攻击销毁
 	};
 
 	//网络消息数据结构
@@ -28,13 +28,11 @@ namespace XiaJiaJia {
 		//消息内容
 		public string message = "";
 
-		//角色状态
+		//角色信息
 		//坐标
 		public Vector3 position = Vector3.zero;
 		//缩放
 		public Vector3 localScale = Vector3.one;
-
-		//角色信息
 		//生命值
 		public int player_life = 0;
 		//攻击力
@@ -42,11 +40,15 @@ namespace XiaJiaJia {
 		//防御
 		public int player_armor = 0;
 
-		//攻击消息
-		//攻击方式
-		public int attick_type = 0;
+		//道具攻击
+		//ID
+		public string attickID = "";
+		//起点
+		public Vector3 attickBegin = Vector3.zero;
+		//终点
+		public Vector3 attickEnd = Vector3.zero;
 		//伤害
-		public int attick_hurt = 0;
+		public int attickHurt = 0;
 
 
 		//消息封装中的key
@@ -55,14 +57,15 @@ namespace XiaJiaJia {
 		private static string Key_ToID = "to";
 		private static string Key_Time = "time";
 		private static string Key_Msg = "msg";
-		private static string Key_Position = "s_po";
-		private static string Key_LocalScale = "s_sa";
+		private static string Key_PlayerPosition = "p_po";
+		private static string Key_PlayerLocalScale = "p_sa";
 		private static string Key_PlayerLife = "p_li";
 		private static string Key_PlayerAttick = "p_at";
 		private static string Key_PlayerArmor = "p_ar";
-		private static string Key_AttickType = "a_ty";
+		private static string Key_AttickID = "a_id";
+		private static string Key_AttickBegin = "a_be";
+		private static string Key_AttickEnd = "a_en";
 		private static string Key_AttickHurt = "a_hu";
-
 
 		//空消息判断
 		public bool isNull(){
@@ -76,20 +79,23 @@ namespace XiaJiaJia {
 			Dictionary<string, string> dic = new Dictionary<string, string> ();
 			dic.Add (Key_Code, ((int)code).ToString());
 			dic.Add (Key_FromID, from);
-			dic.Add (Key_ToID, to);
+			dic.Add (Key_Msg, message);
 			dic.Add (Key_Time, time);
 			if (code == MessageCode.SendMessage) {
-				dic.Add (Key_Msg, message);
-			} else if (code == MessageCode.PlayerStatus) {
-				dic.Add (Key_Position, position.ToString ());
-				dic.Add (Key_LocalScale, localScale.ToString ());
+				dic.Add (Key_ToID, to);
 			} else if (code == MessageCode.PlayerInfo) {
+				dic.Add (Key_PlayerPosition, position.ToString ());
+				dic.Add (Key_PlayerLocalScale, localScale.ToString ());
 				dic.Add (Key_PlayerLife, player_life.ToString ());
 				dic.Add (Key_PlayerAttick, player_attick.ToString ());
 				dic.Add (Key_PlayerArmor, player_armor.ToString ());
-			} else if (code == MessageCode.PlayerAttack) {
-				dic.Add (Key_AttickType, attick_type.ToString ());
-				dic.Add (Key_AttickHurt, attick_hurt.ToString ());
+			} else if (code == MessageCode.AttackInfo) {
+				dic.Add (Key_AttickID, attickID);
+				dic.Add (Key_AttickBegin, attickBegin.ToString ());
+				dic.Add (Key_AttickEnd, attickEnd.ToString ());
+				dic.Add (Key_AttickHurt, attickHurt.ToString ());
+			} else if (code == MessageCode.AttackDestroy) {
+				dic.Add (Key_AttickID, attickID);
 			}
 
 			JSONObject json = new JSONObject (dic);
@@ -127,16 +133,14 @@ namespace XiaJiaJia {
 				if (dic.ContainsKey (Key_Msg)) {
 					message = dic [Key_Msg];
 				}
-			} else if (code == MessageCode.PlayerStatus) {
-				//角色状态消息
-				if (dic.ContainsKey (Key_Position)) {
-					position = dic [Key_Position].ToVector3 ();
-				} 
-				if (dic.ContainsKey (Key_LocalScale)) {
-					localScale = dic [Key_LocalScale].ToVector3 ();
-				}
 			} else if (code == MessageCode.PlayerInfo) {
 				//角色信息
+				if (dic.ContainsKey (Key_PlayerPosition)) {
+					position = dic [Key_PlayerPosition].ToVector3 ();
+				} 
+				if (dic.ContainsKey (Key_PlayerLocalScale)) {
+					localScale = dic [Key_PlayerLocalScale].ToVector3 ();
+				}
 				if (dic.ContainsKey (Key_PlayerLife)) {
 					player_life = int.Parse (dic [Key_PlayerLife]);
 				} 
@@ -146,22 +150,37 @@ namespace XiaJiaJia {
 				if (dic.ContainsKey (Key_PlayerArmor)) {
 					player_armor = int.Parse (dic [Key_PlayerArmor]);
 				} 
-			} else if (code == MessageCode.PlayerAttack) {
-				//攻击信息
-				if (dic.ContainsKey (Key_AttickType)) {
-					attick_type = int.Parse (dic [Key_AttickType]);
+			} else if (code == MessageCode.AttackInfo) {
+				//攻击消息
+				if (dic.ContainsKey (Key_AttickID)) {
+					attickID = dic [Key_AttickID];
+				} 
+				if (dic.ContainsKey (Key_AttickBegin)) {
+					attickBegin = dic [Key_AttickBegin].ToVector3 ();
+				} 
+				if (dic.ContainsKey (Key_AttickEnd)) {
+					attickEnd = dic [Key_AttickEnd].ToVector3 ();
 				} 
 				if (dic.ContainsKey (Key_AttickHurt)) {
-					attick_hurt = int.Parse (dic [Key_AttickHurt]);
+					attickHurt = int.Parse (dic [Key_AttickHurt]);
+				} 
+			}else if (code == MessageCode.AttackDestroy) {
+				if (dic.ContainsKey (Key_AttickID)) {
+					attickID = dic [Key_AttickID];
 				} 
 			}
 		}
 		//构造角色状态消息
 		public NetInfo (string name, GameObject obj) {
-			code = MessageCode.PlayerStatus;
+			code = MessageCode.PlayerInfo;
 			from = name;
 			position = obj.transform.position;
 			localScale = obj.transform.localScale;
+			//获取角色信息
+			Player info = obj.GetComponent<Player>();
+			player_life = info.Life;
+			player_attick = info.Attack;
+			player_armor = info.Armor;
 		}
 		//构造文字消息
 		public NetInfo (string name, string msg) {
@@ -169,21 +188,20 @@ namespace XiaJiaJia {
 			from = name;
 			message = msg;
 		}
-		//构造角色信息
-		public NetInfo(string name, int life, int attick, int armor) {
-			code = MessageCode.PlayerInfo;
+		//构造攻击消息
+		public NetInfo (string name, Vector3 begin, Vector3 end, int hurt) {
+			code = MessageCode.AttackInfo;
 			from = name;
-			player_life = life;
-			player_attick = attick;
-			player_armor = armor;
+			attickID = System.DateTime.Now.ToString ();
+			attickBegin = begin;
+			attickEnd = end;
+			attickHurt = hurt;
 		}
-		//构造攻击信息
-		public NetInfo(string name, string to, int type, int hurt) {
-			code = MessageCode.PlayerAttack;
+		public NetInfo (MessageCode c, string name, string id) {
+			code = MessageCode.AttackDestroy;
 			from = name;
-			to = to;
-			attick_type = type;
-			attick_hurt = hurt;
+			attickID = id;
+			attickID = System.DateTime.Now.ToString ();
 		}
 	}
 

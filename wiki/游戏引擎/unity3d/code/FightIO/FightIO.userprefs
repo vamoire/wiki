@@ -1,10 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TouchEvent.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SocketGM.cs">
     <Files>
-      <File FileName="Assets/Game.cs" Line="37" Column="41" />
-      <File FileName="Assets/SocketGM.cs" Line="119" Column="36" />
-      <File FileName="Assets/TouchEvent.cs" Line="187" Column="4" />
+      <File FileName="Assets/SocketGM.cs" Line="122" Column="3" />
+      <File FileName="Assets/Game.cs" Line="1" Column="1" />
+      <File FileName="Assets/TouchEvent.cs" Line="206" Column="9" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
