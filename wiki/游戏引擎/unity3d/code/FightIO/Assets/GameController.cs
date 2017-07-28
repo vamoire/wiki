@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
 
 	void Awake() {
 		//默认名称
-		UserName = "user" + Universal.getPhysicalAddress();
+		UserName = "user123" + Universal.getPhysicalAddress() + Random.Range(0, 999999);
 		Debug.Log (UserName);
 		__game_controller = this;
 	}

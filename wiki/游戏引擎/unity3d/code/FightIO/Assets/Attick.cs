@@ -10,6 +10,8 @@ public class Attick : MonoBehaviour {
 	public Vector3 End = Vector3.zero;
 	public int Hurt = 0;
 	public float Speed = 2f;
+	//射程
+	public float Len = 20;
 
 	//计时
 	private float time = 0;
@@ -19,11 +21,17 @@ public class Attick : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//终点重新计算
+		End = Begin + (End - Begin) / Vector3.Distance(Begin,End) * Len;
+
+		//持续时间
 		desTime = Vector3.Distance (Begin, End) / Speed;
 		if (GameController.getInstance ().UserName == User && User != "") {
 			//自己发射的子弹
 			var render = gameObject.GetComponent<SpriteRenderer>();
-			render.color = Color.green;
+			Texture2D texture2d = (Texture2D)Resources.Load ("Neptune");
+			Sprite sp = Sprite.Create (texture2d, render.sprite.textureRect, new Vector2 (0.5f, 0.5f));
+			render.sprite = sp;
 		}
 	}
 	
@@ -64,7 +72,7 @@ public class Attick : MonoBehaviour {
 			//不是自己发射的子弹
 			var player = GameController.getInstance().myPlayer;
 			if (player != null) {
-				if (player.GetComponent<BoxCollider2D> () == collider) {
+				if (player.GetComponent<Collider2D> () == collider) {
 					//别人的子弹射到自己
 
 					var info = player.GetComponent<Player> ();

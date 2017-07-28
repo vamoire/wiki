@@ -117,7 +117,7 @@ public class SocketGM : MonoBehaviour {
 				}
 				item = gc.AllUserDic [name];
 			} else {
-				item = GameController.getInstance ().myPlayer;
+//				item = GameController.getInstance ().myPlayer;
 			}
 
 			//同步角色状态
@@ -199,6 +199,7 @@ public class SocketGM : MonoBehaviour {
 	public void SendAttick(GameObject obj, Vector3 end) {
 		//获取攻击起点
 		Vector3 begin = obj.transform.position;
+		begin.y = begin.y - 0.8f;
 		end.z = begin.z;
 		Player player = obj.GetComponent<Player> ();
 		NetInfo info = new NetInfo(this.UserName, begin, end, player.Attack);

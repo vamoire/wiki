@@ -283,5 +283,16 @@ namespace XiaJiaJia {
 				return Input.mousePosition;
 			}
 		}
+		public static List<Vector2> Points() {
+			List<Vector2> list = new List<Vector2>();
+			if (Input.touchCount > 0) {
+				for (int i = 0; i < Input.touchCount; ++i) {
+					list.Add (Input.GetTouch (i).position);
+				}
+			} else {
+				list.Add (Input.mousePosition);
+			}
+			return list;
+		}
 	}
 }
