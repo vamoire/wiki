@@ -1,5 +1,8 @@
 # MAC
 
+## 图片剪裁
+打开图片选择区域Command＋K
+
 ## 目录权限
 <pre>
 sudo chown -R user:/Library/WebServer/Documents/

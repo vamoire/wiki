@@ -2,15 +2,26 @@
 
 网络游戏中的攻击判断
 
-[网络游戏中的攻击行为分析](http://job.17173.com/content/2011-03-28/20110328141845820,1.shtml)
+- [网络游戏中的攻击行为分析](http://job.17173.com/content/2011-03-28/20110328141845820,1.shtml)
 
-[网络游戏编程中如何应对并数据处理上的并发](https://www.zhihu.com/question/35703590)
+- [网络游戏编程中如何应对并数据处理上的并发](https://www.zhihu.com/question/35703590)
 
 <<网络游戏核心技术与实践>>
 
-[腾讯GAD](http://www.gad.qq.com/community/program)
+- [手游实时战斗的同步问题处理方案详解](http://www.gad.qq.com/article/detail/10121)
+
+- [腾讯GAD](http://www.gad.qq.com/community/program)
 
 尚好的青春
+
+
+
+## 服务端
+
+- [WebSocket实战](http://www.cnblogs.com/tinywan/p/6182411.html)
+
+- [Workerman](http://www.workerman.net/)
+
 
 ## 碰撞
 

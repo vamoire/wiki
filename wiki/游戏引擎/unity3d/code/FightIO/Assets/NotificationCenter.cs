@@ -13,12 +13,12 @@ using System;
 // This default center is what all objects will use for most notifications.  We can of course create our own separate instances of NotificationCenter, but this is the static one used by all.
 public class NotificationCenter : MonoBehaviour
 {
-	private static NotificationCenter defaultCenter;
+	private static NotificationCenter defaultCenter = null;
 	public static NotificationCenter DefaultCenter () {
 		// If the defaultCenter doesn't already exist, we need to create it
-		if (!defaultCenter) {
+		if (defaultCenter == null) {
 			// Because the NotificationCenter is a component, we have to create a GameObject to attach it to.
-			GameObject notificationObject = new GameObject("Default Notification Center");
+			GameObject notificationObject = new GameObject("Notification Center");
 			// Add the NotificationCenter component, and set it as the defaultCenter
 			defaultCenter = notificationObject.AddComponent<NotificationCenter>();
 			DontDestroyOnLoad(defaultCenter);

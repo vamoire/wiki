@@ -12,33 +12,80 @@ public class GameController : MonoBehaviour {
 	public Dictionary<string, GameObject> AllUserDic = new Dictionary<string, GameObject>();
 	//所有攻击道具
 	public List<GameObject> AllAttickList = new List<GameObject> ();
-	//角色名称
-	public string UserName = "";
+	//角色ID
+	public string UserID = "";
 
 
-	private NotificationCenter notiCenter = null;
-
-
-	static GameController __game_controller = null;
-	static public GameController getInstance() {
+	//单例
+	private static GameController __game_controller = null;
+	public static GameController Share () {
+		if (__game_controller == null) {
+			GameObject obj = new GameObject("Game Manager");
+			__game_controller = obj.AddComponent<GameController>();
+			DontDestroyOnLoad(__game_controller);
+		}
 		return __game_controller;
 	}
 
 	void Awake() {
-		//默认名称
-		UserName = "user123" + Universal.getPhysicalAddress() + Random.Range(0, 999999);
-		Debug.Log (UserName);
-		__game_controller = this;
+		
 	}
 
 	void OnEnable() {
-		notiCenter = NotificationCenter.DefaultCenter ();
-		notiCenter.AddObserver (this, "NotifiEvent");
-		//		NotificationCenter.DefaultCenter ().PostNotification (new Notification (this, "NotifiEvent"));
+		//添加通知监听
+		var notiCenter = NotificationCenter.DefaultCenter ();
+		//登录
+		notiCenter.AddObserver (this, SocketGM.LoginNotification);
 	}
 
-	void NotifiEvent(Notification notification) {
+	//登录通知事件
+	void LoginNotification(Notification notification) {
+		UserID = notification.data.ToString ();
 
+		var socket = SocketGM.Share ();
+		if (socket.Online) {
+			//地图
+			GameObject map = GameObject.Find ("Map");
+			//销毁所有游戏角色和游戏道具
+			List<GameObject> destroyList = new List<GameObject> ();
+			for (int i = 0; i < map.transform.childCount; ++i) {
+				var child = map.transform.GetChild (i).gameObject;
+				PlayerController pc = child.GetComponent<PlayerController> ();
+				Attick attick = child.GetComponent<Attick> ();
+				if (pc != null || attick != null) {
+					destroyList.Add (child);
+				}
+			}
+			foreach (GameObject item in destroyList) {
+				Destroy (item);
+			}
+
+			myPlayer = null;
+			myPlayerInfo = null;
+
+			if (HideStartUI ()) {
+
+				//添加自身角色
+				//add user
+				myPlayer = (GameObject)Instantiate (Resources.Load ("BodyL"));
+				myPlayer.name = UserID;
+				myPlayer.transform.parent = map.transform;
+				myPlayer.transform.position = new Vector3 (Random.Range(-15, 15), Random.Range(-10, 10), myPlayer.transform.position.z);
+
+				//设置角色信息
+				myPlayerInfo = myPlayer.GetComponent<Player> ();
+				myPlayerInfo.Name = UserID;
+				myPlayerInfo.Life = 100;
+				myPlayerInfo.Attack = 80;
+				myPlayerInfo.Armor = 10;
+				myPlayerInfo.Status = Player.PlayerStatus.Life;
+
+				//第一次同步角色信息
+				socket.SendAsyncGameObject (myPlayer);
+
+			}
+
+		}
 	}
 
 	// Use this for initialization
@@ -47,7 +94,9 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnDisable() {
-		notiCenter.RemoveObserver (this, "NotifiEvent");
+		//移除通知监听
+		var notiCenter = NotificationCenter.DefaultCenter ();
+		notiCenter.RemoveObserver (this, SocketGM.LoginNotification);
 	}
 	
 	// Update is called once per frame
@@ -79,40 +128,7 @@ public class GameController : MonoBehaviour {
 
 	//开始游戏
 	public void StartGame() {
-		var socket = SocketGM.getInstance ();
-		if (socket) {
-
-			myPlayer = GameObject.Find ("BodyL(Clone)");
-
-			if (myPlayer != null) {
-				Destroy (myPlayer);
-				myPlayer = null;
-				myPlayerInfo = null;
-			}
-			if (myPlayer == null) {
-
-				if (HideStartUI ()) {
-					
-					//添加自身角色
-					//add user
-					myPlayer = (GameObject)Instantiate (Resources.Load ("BodyL"));
-					GameObject node = GameObject.Find ("Map");
-					myPlayer.transform.parent = node.transform;
-
-					//设置角色信息
-					myPlayerInfo = myPlayer.GetComponent<Player> ();
-					myPlayerInfo.Name = UserName;
-					myPlayerInfo.Life = 100;
-					myPlayerInfo.Attack = 80;
-					myPlayerInfo.Armor = 10;
-					myPlayerInfo.Status = Player.PlayerStatus.Life;
-
-					//第一次同步角色信息
-					socket.SendAsyncGameObject (myPlayer);
-
-				}
-			}
-
-		}
+		var socket = SocketGM.Share ();
+		socket.StartConnectServer ();
 	}
 }

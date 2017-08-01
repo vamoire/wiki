@@ -13,8 +13,8 @@ public class Follow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Target == null && GameController.getInstance () != null) {
-			Target = GameController.getInstance ().myPlayer;
+		if (Target == null) {
+			Target = GameController.Share ().myPlayer;
 		}
 		if (Target != null) {
 			transform.position = new Vector3 (Target.transform.position.x, Target.transform.position.y, transform.position.z);

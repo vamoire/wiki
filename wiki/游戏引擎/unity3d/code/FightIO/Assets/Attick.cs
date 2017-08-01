@@ -26,7 +26,7 @@ public class Attick : MonoBehaviour {
 
 		//持续时间
 		desTime = Vector3.Distance (Begin, End) / Speed;
-		if (GameController.getInstance ().UserName == User && User != "") {
+		if (GameController.Share ().UserID == User && User != "") {
 			//自己发射的子弹
 			var render = gameObject.GetComponent<SpriteRenderer>();
 			Texture2D texture2d = (Texture2D)Resources.Load ("Neptune");
@@ -68,10 +68,10 @@ public class Attick : MonoBehaviour {
 		}
 
 		//碰撞到自己
-		if (GameController.getInstance ().UserName != User && User != "") {
+		if (GameController.Share ().UserID != User && User != "") {
 			//不是自己发射的子弹
-			var player = GameController.getInstance().myPlayer;
-			if (player != null) {
+			var player = GameController.Share().myPlayer;
+			if (player != null && GameController.Share().myPlayerInfo.Status == Player.PlayerStatus.Life) {
 				if (player.GetComponent<Collider2D> () == collider) {
 					//别人的子弹射到自己
 
@@ -80,10 +80,10 @@ public class Attick : MonoBehaviour {
 					info.Life = info.Life - (Hurt - info.Armor);
 				}
 					//发送伤害消息
-					SocketGM.getInstance().SendAsyncGameObject(player);
+					SocketGM.Share().SendAsyncGameObject(player);
 
 					//发送子弹销毁消息
-					SocketGM.getInstance().SendAttickDestroy(User,ID);
+					SocketGM.Share().SendAttickDestroy(User,ID);
 
 					//销毁子弹
 					this.destroyAttick();
@@ -93,15 +93,10 @@ public class Attick : MonoBehaviour {
 	}
 
 	public void destroyAttick() {
-
-		if (GameController.getInstance () == null) {
-			return;
-		}
-
 		//销毁子弹
 		isDes = true;
 
-		var all = GameController.getInstance ().AllAttickList;
+		var all = GameController.Share ().AllAttickList;
 		if (all != null) {
 			all.Remove (gameObject);
 		}

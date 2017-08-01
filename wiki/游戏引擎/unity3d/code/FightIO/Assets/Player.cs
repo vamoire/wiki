@@ -38,9 +38,9 @@ public class Player : MonoBehaviour {
 		InfoTextMesh.text = Life.ToString();
 
 		if (Status == PlayerStatus.Life) {
-			var gc = GameController.getInstance ();
+			var gc = GameController.Share ();
 			//血量判断
-			if (Life <= 0 && gc) {
+			if (Life <= 0) {
 				//挂掉了
 				Status = PlayerStatus.Dead;
 				var dic = gc.AllUserDic;
@@ -48,8 +48,10 @@ public class Player : MonoBehaviour {
 					dic.Remove (Name);
 				}
 
-				if (Name == gc.UserName) {
+				if (Name == gc.UserID) {
 					//自己挂掉了
+					var pc2d = gameObject.GetComponent<PolygonCollider2D>();
+					pc2d.isTrigger = true;
 					GameController.ShowStartUI ();
 				} else {
 					//销毁对象

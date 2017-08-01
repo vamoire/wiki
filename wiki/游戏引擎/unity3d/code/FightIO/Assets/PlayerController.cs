@@ -8,19 +8,15 @@ public class PlayerController : MonoBehaviour {
 
 	private CnControls.SimpleJoystick StickScript = null;
 
+	private SocketGM socket = SocketGM.Share ();
+
 	void Start () {
 		
 	}
 
 	void Update () {
-		var gc = GameController.getInstance ();
-		if (gc == null || gc.myPlayerInfo == null || gc.myPlayerInfo.Status != Player.PlayerStatus.Life) {
-			return;
-		}
-
-		var socket = SocketGM.getInstance ();
-
-		if (socket == null) {
+		var gc = GameController.Share ();
+		if (gc.myPlayerInfo == null || gc.myPlayerInfo.Status != Player.PlayerStatus.Life) {
 			return;
 		}
 

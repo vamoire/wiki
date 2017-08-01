@@ -8,21 +8,37 @@ using XiaJiaJia;
 
 
 public class SocketGM : MonoBehaviour {
-	static public SocketGM __socketGM = null;
-	static public SocketGM getInstance() {
-		return __socketGM;
+
+	public const string LoginNotification = "LoginNotification";
+
+	//单例
+	private static SocketGM shareSocketGM = null;
+	public static SocketGM Share () {
+		if (shareSocketGM == null) {
+			GameObject obj = new GameObject("Socket Manager");
+			shareSocketGM = obj.AddComponent<SocketGM>();
+			DontDestroyOnLoad(shareSocketGM);
+		}
+		return shareSocketGM;
 	}
+
 	//服务器地址
 	public string ServerAddress = "ws://114.215.156.2:8181";
-
-	public Text OutText = null;
-	public Text InText = null;
+	//在线状态
+	public bool Online = false;
+	//当前的消息
+	public string Message = "";
+	//用户ID
+	private string UserID = "";
 
 	private WebSocket ws = null;
-	private string Message = "";
 	private List<string> NetDataList = new List<string> ();
-	//用户ID
-	private string UserName = "";
+
+	//离线超时时间
+	private float OutTime = 10f;
+	//离线超时计时
+	private float OutTimeDt = 0f;
+
 
 	void Awake () {
 		string[] pro = new string[0];
@@ -40,23 +56,39 @@ public class SocketGM : MonoBehaviour {
 			this.Message = "OnError" + e.ToString();
 		};
 		this.ws.OnMessage += (object sender, MessageEventArgs e) => {
-//			Debug.Log ("OnMessage:" + e.Data);
+			Debug.Log ("OnMessage:" + e.Data);
 			this.Message = "OnMessage" + e.Data;
 			//消息添加到网络数据处理列表
 			this.NetDataList.Add(e.Data);
 		};
-		this.ws.ConnectAsync ();
-
-		__socketGM = this;
 	}
 
 	// Use this for initialization
 	void Start () {
-		UserName = GameController.getInstance ().UserName;
+		
 	}
 
 	void FixedUpdate() {
-		this.OutText.text = this.Message;
+		
+		//在线状态更新
+		if (this.NetDataList.Count > 0) {
+			//收到服务器消息 
+
+			//重置离线计时
+			this.OutTimeDt = 0f;
+
+			if (!this.Online) {
+				//转为在线状态
+				this.Online = true;
+			}
+
+		} else if (this.Online) {
+			this.OutTimeDt += 0.02f;
+			if (this.OutTimeDt >= this.OutTime) {
+				//转为离线状态
+				this.Online = false;
+			}
+		}
 
 		//网络数据处理
 		for (int i = 0; i < this.NetDataList.Count; ++i) {
@@ -78,37 +110,48 @@ public class SocketGM : MonoBehaviour {
 		}
 	}
 
+
+	//连接服务器
+	public void StartConnectServer() {
+		this.ws.ConnectAsync ();
+	}
+
 	//处理网络数据
 	public void NetDataExecute(string data) {
 
-		var gc = GameController.getInstance();
-		if (gc == null) {
-			return;
-		}
+		var gc = GameController.Share();
 
 		NetInfo info = new NetInfo (data);
-//		Debug.Log ("NetInfo:" + info.ToNetString());
+
 		//空消息 or 指定其他人接收的消息
-		if (info.isNull () || (info.to.Length > 0 && info.to != this.UserName)) {
-			//消息为空 or 自己发送的消息 or 指定的接收者不是自己
+		if (info.isNull () || (info.to.Length > 0 && info.to != this.UserID)) {
 			return;
 		}
 		//发送者
 		string name = info.from;
+
 		//消息类型判断
-		if (info.code == MessageCode.SendMessage) {
+		if (info.code == MessageCode.Login) {
+			//登录消息
+			UserID = info.loginID;
+			Debug.Log ("用户:" + UserID + "登录");
+			//登录通知
+			NotificationCenter.DefaultCenter ().PostNotification (new Notification (this, LoginNotification, UserID));
+		}
+		else if (info.code == MessageCode.SendMessage) {
 			//文字消息
 			Debug.Log (name + ":" + info.message);
 		} else if (info.code == MessageCode.PlayerInfo) {
 			//同步 非自己 游戏对象消息
 			GameObject item = null;
 			bool create = false;
-			if (info.from != this.UserName) {
+			if (info.from != this.UserID) {
 				//如果不存在此角色 创建角色
 				if (!gc.AllUserDic.ContainsKey (name)) {
 					Debug.Log ("Add User: " + name);
 					//add user
 					GameObject obj = (GameObject)Instantiate (Resources.Load ("BodyS"));
+					obj.name = name;
 					GameObject node = GameObject.Find ("Map");
 					obj.transform.parent = node.transform;
 					gc.AllUserDic.Add (name, obj);
@@ -139,6 +182,7 @@ public class SocketGM : MonoBehaviour {
 		} else if (info.code == MessageCode.AttackInfo) {
 			//攻击消息
 			GameObject obj = (GameObject)Instantiate (Resources.Load ("Attick"));
+			obj.name = "Attick(" + info.from + ")";
 			GameObject node = GameObject.Find ("Map");
 			obj.transform.parent = node.transform;
 
@@ -152,13 +196,13 @@ public class SocketGM : MonoBehaviour {
 
 			gc.AllAttickList.Add (obj);
 		} else if (info.code == MessageCode.AttackDestroy) {
-			//攻击撤销
+			//攻击销毁
 			for (int i = 0; i < gc.AllAttickList.Count; ++i) {
 				GameObject obj = gc.AllAttickList [i];
 				if (obj != null) {
 					Attick attickInfo = obj.GetComponent<Attick> ();
 					if (attickInfo.User == info.from && attickInfo.ID == info.attickID) {
-						//找到需要撤销的ID
+						//找到需要销毁的ID
 						attickInfo.destroyAttick();
 						break;
 					}
@@ -170,7 +214,7 @@ public class SocketGM : MonoBehaviour {
 
 	//发送同步角色状态消息
 	public void SendAsyncGameObject(GameObject obj) {
-		NetInfo info = new NetInfo (this.UserName, obj);
+		NetInfo info = new NetInfo (this.UserID, obj);
 		string msg = info.ToNetString ();
 //		Debug.Log ("msg:" + msg);
 		if (msg == "") {
@@ -183,10 +227,10 @@ public class SocketGM : MonoBehaviour {
 
 
 	//发送消息
-	public void SendMessage() {
-		NetInfo info = new NetInfo (this.UserName, this.InText.text);
+	public void SendMsg(string message) {
+		NetInfo info = new NetInfo (this.UserID, message);
 		string msg = info.ToNetString();
-		this.Message = "Send: " + this.InText.text;
+		this.Message = "Send: " + msg;
 		if (msg == "") {
 			return;
 		}
@@ -202,7 +246,7 @@ public class SocketGM : MonoBehaviour {
 		begin.y = begin.y - 0.8f;
 		end.z = begin.z;
 		Player player = obj.GetComponent<Player> ();
-		NetInfo info = new NetInfo(this.UserName, begin, end, player.Attack);
+		NetInfo info = new NetInfo(this.UserID, begin, end, player.Attack);
 		string msg = info.ToNetString ();
 //		Debug.Log ("msg:" + msg);
 		if (msg == "") {

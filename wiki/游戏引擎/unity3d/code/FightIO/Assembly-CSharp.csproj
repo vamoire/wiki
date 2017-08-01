@@ -49,6 +49,7 @@
      <Compile Include="Assets\Attick.cs" />
      <Compile Include="Assets\Follow.cs" />
      <Compile Include="Assets\GameController.cs" />
+     <Compile Include="Assets\NetInfo.cs" />
      <Compile Include="Assets\NotificationCenter.cs" />
      <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\PlayerController.cs" />
