@@ -4,7 +4,8 @@
 ## Anroid Studio
 
 [第一次使用Android Studio时你应该知道的一切配置][1]
-
+[Mac下Android Studio](http://blog.csdn.net/u010291330/article/details/52605672)
+[汉化](http://www.android-studio.org/index.php/chinese)
 
 ## 抢红包
 
