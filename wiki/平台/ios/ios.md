@@ -1,5 +1,14 @@
 # iOS
 
+## 谷歌广告集成
+依赖库:GLKit AdSupport CoreVideo MobileCoreServices
+
+
+
+
+
+
+
 ## XCode图标替换
 [XCode图标替换](XCode图标替换.md)
 
