@@ -1,7 +1,34 @@
 # iOS
 
 ## 谷歌广告集成
-依赖库:GLKit AdSupport CoreVideo MobileCoreServices
+依赖库:
+GLKit 
+AdSupport 
+CoreVideo 
+MobileCoreServices
+
+## vungle广告集成
+依赖库:
+AdSupport.framework
+AudioToolbox.framework
+AVFoundation.framework
+CFNetwork.framework
+CoreGraphics.framework
+CoreMedia.framework
+Foundation.framework
+libz.dylib or libz.tbd
+libsqlite3.dylib or libsqlite3.tbd
+MediaPlayer.framework
+QuartzCore.framework
+StoreKit.framework
+SystemConfiguration.framework
+UIKit.framework
+WebKit.framework
+
+[Vungle SDK的崩溃问题](http://www.jianshu.com/p/b824ed3e8ef5)
+Other Link: -ObjC
+GameController.framework
+libc++.tbd
 
 
 
