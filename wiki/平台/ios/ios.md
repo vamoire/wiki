@@ -1,5 +1,10 @@
 # iOS
 
+## DEBUG模式判断
+<pre>
+#ifdef DEBUG
+</pre>
+
 ## 谷歌广告集成
 依赖库:
 GLKit 
