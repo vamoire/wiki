@@ -1,6 +1,12 @@
 # unity3d
 
-网络游戏中的攻击判断
+## 热更新方案
+
+- [热更新方案](http://blog.csdn.net/guofeng526/article/details/52662994)
+
+
+
+## 网络游戏中的攻击判断
 
 - [网络游戏中的攻击行为分析](http://job.17173.com/content/2011-03-28/20110328141845820,1.shtml)
 

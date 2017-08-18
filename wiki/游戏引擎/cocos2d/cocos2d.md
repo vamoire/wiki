@@ -1,6 +1,10 @@
 # cocos2d
 
-##cocos2dxlua3.15iOS模拟器崩溃
+## cocos creator 开发文档
+
+- [Cocos Creator 开发文档](http://www.cocos.com/docs/creator/getting-started/index.html)
+
+## cocos2dxlua3.15iOS模拟器崩溃
 - [cocos2dxlua3.15iOS模拟器崩溃](http://www.cnblogs.com/skar/p/7066254.html)
 
 - [CocosCreator手记03——配置VSCode的TypeScript环境](http://www.tuicool.com/articles/U3mU3my)
