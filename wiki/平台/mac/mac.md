@@ -1,5 +1,15 @@
 # MAC
 
+## 安装bundle文件
+需要安装VMware Workstation for Linux on Ubuntu，文件是Bundle格式，由于我是新手不知怎样安装，在网上找了不少资料，竟然不能执行。
+　　解决：
+　　1, sudo su
+　　要先取得root权限，网上的资料都没说这个，结果就是因为这个弄了好久都不成功。
+　　2, sudo chmod +x VMware-Workstation-Full-7.1.3-324285.x86_64.bundle
+　　授予运行权限
+　　3，sudo ./VMware-Workstation-Full-7.1.3-324285.x86_64.bundle
+　　这样就可以有个图形界面安装了。
+
 ## 图片剪裁
 打开图片选择区域Command＋K
 

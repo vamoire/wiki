@@ -21,7 +21,9 @@
 - [WebSocket实战](http://www.cnblogs.com/tinywan/p/6182411.html)
 
 - [Workerman](http://www.workerman.net/)
-
+- [链接1](http://www.workerman.net/gatewaydoc/advanced/push.html)
+- [链接2](http://doc.workerman.net/315306)
+- [链接3](http://www.workerman.net/gatewaydoc/advanced/file-monitor.html)
 
 ## 碰撞
 
