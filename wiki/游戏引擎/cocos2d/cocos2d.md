@@ -1,5 +1,15 @@
 # cocos2d
 
+## 二维码生成
+
+[QRCode](http://code.ciaoca.com/javascript/qrcode/)
+[cocos2d-x绘制二维码(2.x)](https://github.com/neoliang/cocos2d-qrsprite)
+
+## Mac修改cocos2d环境变量
+<pre>
+pico .bash_profile
+</pre>
+
 ## cocos creator 开发文档
 
 - [Cocos Creator 开发文档](http://www.cocos.com/docs/creator/getting-started/index.html)
