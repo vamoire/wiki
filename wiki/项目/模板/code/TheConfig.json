@@ -1,0 +1,12 @@
+{
+    "UpdateUrl":"UpdateUrl",
+    "UpdateOnAppEnterForeground":true,
+    "ADConfigUpdateUrl":"http://app.cnafb.com/ADConfig.json",
+    "Review": {
+        "enable":false,
+        "iOSUrl":"iOSUrl",
+        "androidUrl":"androidUrl",
+        "successTime":10,
+        "neverShowIfSuccess":true
+    }
+}

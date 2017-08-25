@@ -1,0 +1,19 @@
+{
+    "google":{
+        "app":"ca-app-pub-2547140954743531~1471724692",
+        "banner":"ca-app-pub-2547140954743531/2733013080",
+        "interstitial":"ca-app-pub-2547140954743531/6620287209",
+        "reward":"ca-app-pub-2547140954743531/3794813317"
+    },
+    "vungle":{
+        "app":"598a6c949fa26d1d69002091",
+        "reward":[
+            "DEFAULT29162"
+        ]
+    },
+    "googleReward":-1,
+    "shareUnlock":3,
+    "reviewUnlock":3,
+    "rewardUnlock":3,
+    "reviewUnlockHz":10
+}
