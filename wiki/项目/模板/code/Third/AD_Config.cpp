@@ -90,6 +90,34 @@ void AD_Config::updateConfig(){
     mx::valueGetString(Value(), "", 0, "", nullptr);
 }
 
+//奖励视频广告
+void AD_Config::requestRewardAD(){
+    if (isUseGoogleReward()) {
+        AD_Google::getInstance()->requestRewardedVideo();
+    }
+    else {
+        AD_Vungle::getInstance()->requestAD();
+    }
+}
+bool AD_Config::rewardIsReady(){
+    bool ret = false;
+    if (isUseGoogleReward()) {
+        ret = AD_Google::getInstance()->rewardedVideoIsReady();
+    }
+    else {
+        ret = AD_Vungle::getInstance()->isReady();
+    }
+    return ret;
+}
+void AD_Config::showRewardAD(std::function<void(bool)>callback){
+    if (isUseGoogleReward()) {
+        AD_Google::getInstance()->showRewardedVideoAD(callback);
+    }
+    else {
+        AD_Vungle::getInstance()->showAD(callback);
+    }
+}
+
 //获取当前奖励视频种类
 bool AD_Config::isUseGoogleReward(){
     return _useGoogleReward;

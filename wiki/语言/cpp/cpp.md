@@ -59,6 +59,17 @@ if (dynamic_cast< LessonLayer* >(this) == nullptr) {
 }
 </pre>
 
+## 字符串erase
+
+erase函数的原型如下：
+（1）string& erase ( size_t pos = 0, size_t n = npos );
+（2）iterator erase ( iterator position );
+（3）iterator erase ( iterator first, iterator last );
+也就是说有三种用法：
+（1）erase(pos,n); 删除从pos开始的n个字符，比如erase(0,1)就是删除第一个字符
+（2）erase(position);删除position处的一个字符(position是个string类型的迭代器)
+（3）erase(first,last);删除从first到last之间的字符（first和last都是迭代器）
+
 ## 字符串截取
 <pre>
 std::string str = "abcd";

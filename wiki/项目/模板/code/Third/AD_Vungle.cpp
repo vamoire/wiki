@@ -41,7 +41,7 @@ bool AD_Vungle::isReady(std::string placementID){
 }
 
 //展示广告
-bool AD_Vungle::showAD(std::function<void()>closeCallback, std::string placementID){
+bool AD_Vungle::showAD(std::function<void(bool)>callback, int placementIdx){
     return false;
 }
 

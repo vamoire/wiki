@@ -12,6 +12,10 @@
 #include "json/document.h"
 #include "network/HttpClient.h"
 
+#if AES_Enabled
+#include "AES.hpp"
+#endif
+
 USING_NS_CC;
 using namespace cocos2d::network;
 
@@ -82,6 +86,64 @@ namespace mx {
             }
             ret = valueFromJsonValue(doc);
         } while (0);
+        return ret;
+    }
+    
+    //读取json
+    std::string readJsonValue(cocos2d::Value jsonValue){
+        std::string k = "\"";
+        std::string ret = k + k;
+        switch (jsonValue.getType()) {
+            case Value::Type::NONE:
+                
+                break;
+            case Value::Type::STRING:
+                ret = k + jsonValue.asString() + k;
+                break;
+            case Value::Type::BOOLEAN:
+                if (jsonValue.asBool()) {
+                    ret = "true";
+                }
+                else {
+                    ret = "false";
+                }
+                break;
+            case Value::Type::MAP:
+            {
+                auto vm = jsonValue.asValueMap();
+                ret = "{";
+                for (auto i = vm.begin(); i != vm.end(); ++i) {
+                    auto key = i->first;
+                    auto value = i->second;
+                    ret = ret + k + key + k + ":" + readJsonValue(value) + ",";
+                }
+                if (ret.length() > 1) {
+                    ret.pop_back();
+                }
+                ret += "}";
+            }
+                break;
+            case Value::Type::VECTOR:
+            {
+                auto vv = jsonValue.asValueVector();
+                ret = "[";
+                for (auto value : vv) {
+                    ret = ret + readJsonValue(value) + ",";
+                }
+                if (ret.length() > 1) {
+                    ret.pop_back();
+                }
+                ret += "]";
+            }
+                break;
+            case Value::Type::DOUBLE:
+            case Value::Type::FLOAT:
+            case Value::Type::INTEGER:
+                ret = jsonValue.asString();
+                break;
+            default:
+                break;
+        }
         return ret;
     }
     
@@ -270,4 +332,100 @@ namespace mx {
         strftime(buf, sizeof(buf), format, &ts);
         return std::string(buf);
     }
+    
+    
+#if AES_Enabled
+    //aes加密解密
+    std::string aesCipher(std::string text, std::string keyy){
+        unsigned char *key = (unsigned char*)keyy.c_str();
+        
+        int len = (int)text.length();
+        AES* aes = new AES(key);
+        
+        const char* textc = text.c_str();
+        char* in = const_cast<char*>(textc);
+        
+        void* out = aes->Cipher(in, len);
+        char *outt;
+        outt = (char*)out;
+        std::string ret = "";
+        int p = len % 16;
+        if (p > 0) {
+            len = len + 16 - p;
+        }
+        for (int i = 0; i < len; ++i) {
+            ret += outt[i];
+        }
+        CC_SAFE_DELETE(aes);
+        return ret;
+    }
+    std::string aesInvCipher(std::string text, std::string keyy){
+        unsigned char *key = (unsigned char*)keyy.c_str();
+        
+        int len = (int)text.length();
+        AES* aes = new AES(key);
+        
+        const char* textc = text.c_str();
+        char* in = const_cast<char*>(textc);
+        
+        void* out = aes->InvCipher(in, len);
+        char *outt;
+        outt = (char*)out;
+        std::string ret = "";
+        for (int i = 0; i < len; ++i) {
+            ret += outt[i];
+        }
+        CC_SAFE_DELETE(aes);
+        return ret;
+    }
+    cocos2d::Data aesCipherData(cocos2d::Data data, std::string key){
+        unsigned char *keyy = (unsigned char*)key.c_str();
+        int len = (int)data.getSize();
+        AES* aes = new AES(keyy);
+        void* out = aes->Cipher(data.getBytes(), len);
+        unsigned char* outt = (unsigned char*)out;
+        const unsigned char* bytes = const_cast<const unsigned char*>(outt);
+        int p = len % 16;
+        if (p > 0) {
+            len = len + 16 - p;
+        }
+        Data ret;
+        ret.copy(bytes, len);
+        CC_SAFE_DELETE(aes);
+        return ret;
+    }
+    cocos2d::Data aesInvCipherData(cocos2d::Data data, std::string key){
+        unsigned char *keyy = (unsigned char*)key.c_str();
+        int len = (int)data.getSize();
+        AES* aes = new AES(keyy);
+        void* out = aes->InvCipher(data.getBytes(), len);
+        unsigned char* outt = (unsigned char*)out;
+        const unsigned char* bytes = const_cast<const unsigned char*>(outt);
+        Data ret;
+        ret.copy(bytes, len);
+        CC_SAFE_DELETE(aes);
+        return ret;
+    }
+    //ValueMap加密读写Json
+    cocos2d::ValueMap getValueMapFromFile(const std::string& filename){
+        ValueMap vm;
+        std::string str = FileUtils::getInstance()->getStringFromFile(filename);
+        if (str.length() > 2 && str.at(0) == 'm' && str.at(1) == 'x') {
+            //加密格式的json
+            str.erase(0, 2);
+            str = aesInvCipher(str, "passkey");
+        }
+        Value ret = readJsonString(str);
+        if (ret.getType() == Value::Type::MAP) {
+            vm = ret.asValueMap();
+        }
+        return vm;
+    }
+    bool writeValueMapToFile(const ValueMap &dict, const std::string &fullPath){
+        std::string str = readJsonValue(Value(dict));
+        str = "mx" + aesCipher(str, "passkey");
+        return FileUtils::getInstance()->writeStringToFile(str, fullPath);
+    }
+    
+#endif
 }

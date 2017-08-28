@@ -9,6 +9,9 @@
 #ifndef Base_hpp
 #define Base_hpp
 
+//AES加密
+#define AES_Enabled 1
+
 #include "cocos2d.h"
 
 namespace mx {
@@ -22,6 +25,8 @@ namespace mx {
     
     //读取json字符串
     cocos2d::Value readJsonString(std::string jsonStr);
+    //读取json
+    std::string readJsonValue(cocos2d::Value jsonValue);
     
     //读取json文件
     cocos2d::Value readJsonFile(std::string file);
@@ -48,6 +53,18 @@ namespace mx {
     //时间字符串转换
     time_t string2time(std::string str, const char* format = "%Y-%m-%d %H:%M:%S");
     std::string time2string(time_t time, const char* format = "%Y-%m-%d %H:%M:%S");
+
+#if AES_Enabled
+    //aes加密解密
+    std::string aesCipher(std::string text, std::string keyy);
+    std::string aesInvCipher(std::string text, std::string keyy);
+    cocos2d::Data aesCipherData(cocos2d::Data data, std::string key);
+    cocos2d::Data aesInvCipherData(cocos2d::Data data, std::string key);
+    //ValueMap加密读写Json
+    cocos2d::ValueMap getValueMapFromFile(const std::string& filename);
+    bool writeValueMapToFile(const cocos2d::ValueMap &dict, const std::string &fullPath);
+#endif
+    
 }
 
 #endif /* Base_hpp */

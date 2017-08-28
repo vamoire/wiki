@@ -69,7 +69,7 @@ void AD_Google::requestRewardedVideo(){}
 //奖励视频是否准备好
 bool AD_Google::rewardedVideoIsReady(){return false;}
 //展示奖励视屏
-bool AD_Google::showRewardedVideoAD(std::function<void()>rewardCallback, std::function<void()>rewardCloseCallback){return false;}
+bool AD_Google::showRewardedVideoAD(std::function<void(bool)>callback){return false;}
 
 
 AD_Google::AD_Google(){

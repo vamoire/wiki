@@ -209,17 +209,15 @@ AD_Google_iOS::AD_Google_iOS() : _bannerID("")
 ,_rewardedVideoID("")
 ,_closeCallback(nullptr)
 ,_rewardCallback(nullptr)
-,_rewardCloseCallback(nullptr)
+,_rewardSuccess(false)
 {
     Google_iOS* ios = [[Google_iOS alloc] init];
     [ios setRewardCallback:^(){
-        if (this->_rewardCallback) {
-            this->_rewardCallback();
-        }
+        this->_rewardSuccess = true;
     }];
     [ios setRewardCloseCallback:^(){
-        if (this->_rewardCloseCallback) {
-            this->_rewardCloseCallback();
+        if (this->_rewardCallback) {
+            this->_rewardCallback(this->_rewardSuccess);
         }
     }];
     [GADRewardBasedVideoAd sharedInstance].delegate = ios;
@@ -391,14 +389,14 @@ bool AD_Google_iOS::rewardedVideoIsReady(){
 }
 
 //展示奖励视屏
-bool AD_Google_iOS::showRewardedVideoAD(std::function<void()>rewardCallback, std::function<void()>rewardCloseCallback){
+bool AD_Google_iOS::showRewardedVideoAD(std::function<void(bool)>callback){
     //广告开关
     if (!AD_Config::getInstance()->isOpen()) {
         return false;
     }
     if ([[GADRewardBasedVideoAd sharedInstance] isReady]) {
-        _rewardCallback = rewardCallback;
-        _rewardCloseCallback = rewardCloseCallback;
+        _rewardCallback = callback;
+        this->_rewardSuccess = false;
         UIViewController* root = static_cast<UIViewController*>(_rootViewController);
         [[GADRewardBasedVideoAd sharedInstance] presentFromRootViewController:root];
         return true;

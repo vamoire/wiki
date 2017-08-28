@@ -24,6 +24,11 @@ public:
     //是否允许评论
     bool reviewEnable();
     
+    //是否已经成功评论过
+    bool isReviewSuccess();
+    //设置为已经评论成功过
+    void setReviewSuccess(bool success);
+    
     //跳转评论
     void openReview(std::function<void(bool)>callback);
     

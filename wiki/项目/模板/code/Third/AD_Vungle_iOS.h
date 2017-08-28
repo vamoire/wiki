@@ -22,14 +22,14 @@ public:
     //广告是否准备好了
     virtual bool isReady(std::string placementID = "") override;
     //展示广告
-    virtual bool showAD(std::function<void()>closeCallback, std::string placementID = "") override;
+    virtual bool showAD(std::function<void(bool)>callback, int placementIdx = 0) override;
     
     AD_Vungle_iOS();
 private:
     std::string _appID;
     void* _rootViewController;
     std::vector<std::string> _placementID;
-    std::function<void()>_closeCallback;
+    std::function<void(bool)>_callback;
 };
 
 

@@ -56,7 +56,7 @@ public:
     //奖励视频是否准备好
     virtual bool rewardedVideoIsReady() override;
     //展示奖励视屏
-    virtual bool showRewardedVideoAD(std::function<void()>rewardCallback, std::function<void()>rewardCloseCallback) override;
+    virtual bool showRewardedVideoAD(std::function<void(bool)>callback) override;
     
 private:
     std::string _bannerID;
@@ -67,8 +67,8 @@ private:
     void* _interstitial;
     std::string _rewardedVideoID;
     std::function<void()>_closeCallback;
-    std::function<void()>_rewardCallback;
-    std::function<void()>_rewardCloseCallback;
+    std::function<void(bool)>_rewardCallback;
+    bool _rewardSuccess;
 };
 
 

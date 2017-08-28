@@ -27,7 +27,7 @@ public:
     //广告是否准备好了
     virtual bool isReady(std::string placementID = "");
     //展示广告
-    virtual bool showAD(std::function<void()>closeCallback, std::string placementID = "");
+    virtual bool showAD(std::function<void(bool)>callback, int placementIdx = 0);
     
     AD_Vungle();
     ~AD_Vungle();

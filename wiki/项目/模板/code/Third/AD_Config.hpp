@@ -10,6 +10,7 @@
 #define AD_Config_hpp
 
 #include <stdio.h>
+#include <functional>
 
 class AD_Config {
     
@@ -22,6 +23,11 @@ public:
     void loadConfig();
     
     void updateConfig();
+    
+    //奖励视频广告
+    void requestRewardAD();
+    bool rewardIsReady();
+    void showRewardAD(std::function<void(bool)>callback);
     
     //获取当前奖励视频种类
     bool isUseGoogleReward();

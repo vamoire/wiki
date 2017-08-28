@@ -57,7 +57,7 @@ public:
     //奖励视频是否准备好
     virtual bool rewardedVideoIsReady();
     //展示奖励视屏
-    virtual bool showRewardedVideoAD(std::function<void()>rewardCallback, std::function<void()>rewardCloseCallback);
+    virtual bool showRewardedVideoAD(std::function<void(bool)>callback);
     
     AD_Google();
     ~AD_Google();

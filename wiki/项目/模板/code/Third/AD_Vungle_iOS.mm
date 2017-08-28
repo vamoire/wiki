@@ -12,16 +12,16 @@
 #include "AD_Config.hpp"
 
 @interface Vungle_iOS : NSObject <VungleSDKDelegate> {
-    void (^_closeBlock)(VungleViewInfo*, NSString*);
+    void (^_closeBlock)(BOOL, NSString*);
 }
 
--(void)setCloseCallback:(void(^)(VungleViewInfo*, NSString*))block;
+-(void)setCloseCallback:(void(^)(BOOL, NSString*))block;
 
 @end
 
 @implementation Vungle_iOS
 
--(void)setCloseCallback:(void (^)(VungleViewInfo*, NSString*))block {
+-(void)setCloseCallback:(void (^)(BOOL, NSString*))block {
     if (block) {
         _closeBlock = [block copy];
     }
@@ -54,7 +54,7 @@
  */
 - (void)vungleWillCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID{
     if (_closeBlock) {
-        _closeBlock(info, placementID);
+        _closeBlock(info.completedView.boolValue, placementID);
     }
 }
 
@@ -84,12 +84,12 @@
 AD_Vungle_iOS::AD_Vungle_iOS(): _appID("")
 ,_rootViewController(nullptr)
 ,_placementID({})
-,_closeCallback(nullptr)
+,_callback(nullptr)
 {
     Vungle_iOS* ios = [[Vungle_iOS alloc] init];
-    [ios setCloseCallback:^(VungleViewInfo *info, NSString *placement) {
-        if (this->_closeCallback) {
-            this->_closeCallback();
+    [ios setCloseCallback:^(BOOL completed, NSString *placement) {
+        if (this->_callback) {
+            this->_callback(completed);
         }
     }];
     [VungleSDK sharedSDK].delegate = ios;
@@ -148,7 +148,7 @@ bool AD_Vungle_iOS::isReady(std::string placementID){
 }
 
 //展示广告
-bool AD_Vungle_iOS::showAD(std::function<void()>closeCallback, std::string placementID){
+bool AD_Vungle_iOS::showAD(std::function<void(bool)>callback, int placementIdx){
     //广告开关
     if (!AD_Config::getInstance()->isOpen()) {
         return false;
@@ -156,10 +156,15 @@ bool AD_Vungle_iOS::showAD(std::function<void()>closeCallback, std::string place
     if (!isReady()) {
         return false;
     }
-    _closeCallback = closeCallback;
-    if (placementID == "" && _placementID.size() > 0) {
-        placementID = _placementID.at(0);
+    _callback = callback;
+    std::string placementID = "";
+    if (_placementID.size() > 0) {
+        placementID = _placementID.at(placementIdx);
     }
+    else {
+        return false;
+    }
+    
     NSError* error = nil;
     NSDictionary *options = @{VunglePlayAdOptionKeyOrientations: @(UIInterfaceOrientationMaskLandscape),
                               VunglePlayAdOptionKeyUser: @"Xia",//userGameID
