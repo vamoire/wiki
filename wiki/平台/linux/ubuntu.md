@@ -13,3 +13,7 @@
 2、将该模块列入不装入名单。编辑文件sudo vim /etc/modprobe.d/blacklist.conf，在末尾加入blacklist i2c-piix4
 
 3、重启reboot
+
+## 搭建git服务器
+
+[搭建git服务器](http://www.cnblogs.com/dee0912/p/5815267.html)
