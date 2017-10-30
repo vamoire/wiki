@@ -1,9 +1,18 @@
 # cocos2d
 
+
+## 修改背景颜色
+* 搜索glClearColor
+* cocos2d_libs/renderer/CCRenderer.cpp
+* // default clear color
+* _clearColor = Color4F::BLACK;
+
+
 ## 二维码生成
 
 [QRCode](http://code.ciaoca.com/javascript/qrcode/)
 [cocos2d-x绘制二维码(2.x)](https://github.com/neoliang/cocos2d-qrsprite)
+[页面中加载webview方式集成二维码]()
 
 ## Mac修改cocos2d环境变量
 <pre>

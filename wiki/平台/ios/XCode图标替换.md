@@ -44,5 +44,6 @@ cp ${fromRoot}ICON_167.png ${toRoot}icon_167.png
 cp ${fromRoot}ICON_180.png ${toRoot}icon_180-1.png
 cp ${fromRoot}ICON_180.png ${toRoot}icon_180.png
 cp ${fromRoot}ICON_1024.png ${toRoot}icon_1024.png
+cp ${fromRoot}ICON_1024.png ${toRoot}icon_1024-1.png
 
 </pre>

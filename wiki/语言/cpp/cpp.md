@@ -1,5 +1,12 @@
 # c++
 
+## std::vector<> find
+<pre>
+    if (std::find(toDestroy.begin(), toDestroy.end(), b)
+        == toDestroy.end()) {
+        toDestroy.push_back(b);
+    }
+</pre>
 
 ## 泛型
 <pre>
