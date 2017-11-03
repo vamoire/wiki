@@ -2,20 +2,16 @@
 
 
 ## TODO
-疯狂点从游戏返回关卡列表的pageview默认index
+
+
+## 疯狂点bug
+微信分享回调 没有跳回app
+购买 点击购买没有反应 app id
 
 
 
-
-
-
-
-
-
-
-
-
-
+## 新疯狂点
+com.alphabet.game.newCrazyClick
 
 
 
@@ -25,34 +21,6 @@ http://www.4399.com/flash/190981_3.htm
 
 ## 待实现
 vnc://192.168.102.29/
-
-微博   alphabetcc@163.com     afb58748570
-qq   3014580590             afbsoft
-微信   3014580590@qq.com   afbsoft
-
-微信开放平台   3014580590@qq.com    afbsoft
-
-微博
-13382653939
-bjt123456
-徐州百吉堂
-2000/01/01
-
-微信
-13382653939 / xz_bjt
-bjt123456
-
-邮箱
-xz_bjt@126.com
-bjt123456
-//m13382653939@163.com
-//bjt123456
-
-微信开发平台
-xz_bjt@126.com
-bjt123456
-//m13382653939@163.com
-//WX123456
 
 
 ##组合课件
