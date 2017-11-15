@@ -9,9 +9,42 @@
 购买 点击购买没有反应 app id
 
 
+## 测试账号
+ios11  新建测试沙盒账号：game@buytest.com   Game123456
+lucktowntest@test.com Gametest123456
+
 
 ## 新疯狂点
-com.alphabet.game.newCrazyClick
+疯狂点2017
+
+com.lucktown.CrazyClickNEW
+
+Apple ID
+为您的 App 自动生成的 ID。
+1306419198
+
+1个游戏点 
+com.lucktown.CrazyClickNEW.OnePoint
+3个游戏点 
+com.lucktown.CrazyClickNEW.ThreePoint
+6个游戏点 
+com.lucktown.CrazyClickNEW.SixPoint
+
+WeChat
+wxc3e328bb44ab4149
+5feffceb30138110b90b88f28c7ba5ee
+
+QQ
+1106440891
+kHHsFcNeSi71UY1R
+
+Sina
+3834007794
+353ea2a1a797b0453a99277c9a2ae2ac
+
+
+https://itunes.apple.com/app/id1306419198
+
 
 
 
