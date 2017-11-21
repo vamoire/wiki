@@ -1,5 +1,107 @@
 # unity3d
 
+
+## Unity延时
+
+<pre>
+    //重复调用  
+    InvokeRepeating("LaunchProjectile", 1,5);//1秒后调用LaunchProjectile () 函数，之后每5秒调用一次    
+    //调用一次  
+    Invoke("LaunchProjectile", 5);//5秒后调用LaunchProjectile () 函数  
+</pre>
+
+- [Unity延时功能的几种实现](http://www.jianshu.com/p/e38b926a3b00)
+
+![image](res/unity延迟.png)
+
+
+## 平台及环境宏定义
+<pre>
+    #if UNITY_IOS || UNITY_ANDROID
+    ...//这里的代码在IOS和Android平台都会编译
+    #endif
+
+    #if UNITY_ANDROID && UNITY_EDITOR
+    ...//这里的代码只有在发布设置设置的是Android，且在编辑器里运行时才会编译
+    #endif
+</pre>
+
+
+## Unity3D-在mac上使用VSCODE开发
+- [Unity3D-在mac上使用VSCODE开发](http://blog.csdn.net/pz789as/article/details/53504724)
+![image](res/unity+vscode.png)
+
+
+## 声音播放
+- 添加组件方式播放
+给GameObject添加AudioSource组件，设置AudioClip属性
+- 代码方式播放
+
+
+
+## 跨场景不销毁对象
+<pre>
+    using UnityEngine;
+    using System.Collections;
+    
+    public class Test : MonoBehaviour 
+    {
+        public GameObject audio;
+        void Start () 
+        {
+            // 切换场景不施放对象
+            DontDestroyOnLoad(audio);
+        }
+    }
+</pre>
+
+
+## 类型转换
+<pre>
+    // string 2 float
+    float f;
+    bool ret = float.TryParse(num, out f);
+</pre>
+
+
+## Unity3d和iOS交互
+- unity3d调用iOS方法
+1、在unity中声明外部函数
+<pre>
+    // DllImport这个方法相当于是告诉Unity，有一个unityToIOS函数在外部会实现。
+    // 使用这个方法必须要导入System.Runtime.InteropServices;
+    // 传递数据只能用以string类型
+    [DllImport("__Internal")]
+    private static extern void unityToIOS (string str);
+</pre>
+2、在iOS中实现外部函数
+<pre>
+    extern "C"
+    {
+        void functionName(char* str){
+            // do something
+        }
+    }
+</pre>
+
+- iOS调用unity3d方法
+<pre>
+    // UnitySendMessage("gameobject", "Method",msg);
+    // 向unity发送消息
+    // 参数一为unity脚本挂载的gameobject
+    // 参数二为unity脚本中要调用的方法名
+    // 参数三为传递的数据，注意：传递的数据只能是char *类型
+    const char* str = [[NSString stringWithFormat:@"10"] UTF8String];
+    UnitySendMessage("Main Camera", "turnRight", str);
+</pre>
+
+- iOS中暂停恢复unity3d方法
+<pre>
+    UnityPause(true)
+    UnityPause(false)
+</pre>
+
+
 ## 热更新方案
 
 - [热更新方案](http://blog.csdn.net/guofeng526/article/details/52662994)
@@ -54,6 +156,10 @@ MonoBehaviour.OnTriggerEnter2D( Collider2D other )
 
 ![image](res/触发器.png)
 
+## 查找对象
+<pre>
+    var followCamera = GameObject.Find ("RenderCamera");
+</pre>
 
 ## 查找子对象
 <pre>
@@ -67,6 +173,13 @@ GameObject node = GameObject.Find ("Main Camera");
 obj.transform.parent = node.transform;
 </pre>
 
+## 动态加载资源
+<pre>
+//资源放在Resources目录中 名称以unity中显示的名称为准
+AudioClip clip = (AudioClip)Resources.Load("T-ara - DAY BY DAY", typeof(AudioClip));
+</pre>
+
+
 ## 删除对象
 <pre>
 Destroy(gameObject)
@@ -78,7 +191,12 @@ this.gameObject
 </pre>
 
 
-## 查找对象上的脚本/组件
+## 添加组件
+<pre>
+<xmp>AudioSource source = gameObject.AddComponent<AudioSource>();</xmp>
+</pre>
+
+## 查找对象上的脚本/组件 查找组件 查找脚本
 <pre>
 <xmp>Player info = obj.GetComponent<Player>();</xmp>
 </pre>
