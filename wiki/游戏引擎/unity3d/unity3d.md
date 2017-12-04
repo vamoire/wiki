@@ -1,6 +1,10 @@
 # unity3d
 
 
+## 字体模糊 3dtext
+先放大text的font，再缩小text的scale
+
+
 ## Unity延时
 
 <pre>
@@ -39,7 +43,7 @@
 
 
 
-## 跨场景不销毁对象
+## 跨场景不销毁对象 单例
 <pre>
     using UnityEngine;
     using System.Collections;
