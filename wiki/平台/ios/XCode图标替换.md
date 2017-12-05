@@ -1,7 +1,7 @@
 # XCode图标替换
 <pre>
 fromRoot="/Users/apple/Downloads/图标/"
-toRoot="/Users/apple/Desktop/WorkSpace/BabyCoolLua_6.1special/frameworks/runtime-src/proj.ios_mac/ios/"
+toRoot="/Users/apple/Desktop/WorkSpace/CrazyClick/frameworks/runtime-src/proj.ios_mac/ios/"
 cp ${fromRoot}ICON_29.png ${toRoot}Icon-29-1.png
 cp ${fromRoot}ICON_29.png ${toRoot}Icon-29.png
 cp ${fromRoot}ICON_40.png ${toRoot}Icon-40-1.png
@@ -24,7 +24,7 @@ cp ${fromRoot}ICON_144.png ${toRoot}Icon-144.png
 cp ${fromRoot}ICON_152.png ${toRoot}Icon-152.png
 cp ${fromRoot}ICON_180.png ${toRoot}Icon-180.png
 cp ${fromRoot}ICON_1024.png ${toRoot}iTunesArtwork
-toRoot="/Users/apple/Desktop/WorkSpace/BabyCoolLua_6.1special/frameworks/runtime-src/proj.ios_mac/BabyCoolLua-mobile/Images-2.xcassets/AppIcon.appiconset/"
+toRoot="/Users/apple/Desktop/WorkSpace/CrazyClick/frameworks/runtime-src/proj.ios_mac/AFBChild-mobile/Images-2.xcassets/AppIcon.appiconset/"
 cp ${fromRoot}ICON_20.png ${toRoot}icon_20.png
 cp ${fromRoot}ICON_29.png ${toRoot}icon_29_2.png
 cp ${fromRoot}ICON_29.png ${toRoot}icon_29.png

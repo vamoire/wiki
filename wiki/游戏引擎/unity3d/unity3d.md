@@ -1,5 +1,8 @@
 # unity3d
 
+## svn
+[svn管理](http://blog.csdn.net/derxiu_xiu/article/details/52369225)
+
 
 ## 字体模糊 3dtext
 先放大text的font，再缩小text的scale

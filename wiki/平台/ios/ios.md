@@ -1,5 +1,8 @@
 # iOS
 
+## 应用下载地址
+https://itunes.apple.com/app/id680440912
+
 ## DEBUG模式判断
 <pre>
 #ifdef DEBUG
