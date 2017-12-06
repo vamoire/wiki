@@ -1,12 +1,15 @@
 # 未完成
 
-
 ## TODO
 
 
-## 疯狂点bug
-微信分享回调 没有跳回app
-购买 点击购买没有反应 app id
+## 微信公众平台（小程序开发）
+
+- [微信公众平台](https://mp.weixin.qq.com/wxopen/initprofile?action=home&lang=zh_CN&token=39991709)
+
+- [TeamViewer](https://www.teamviewer.com/zhCN/)
+363 385 584
+8389
 
 
 ## 测试账号
