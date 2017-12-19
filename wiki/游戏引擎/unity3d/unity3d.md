@@ -1,5 +1,13 @@
 # unity3d
 
+## 场景跳转
+
+<pre>
+using UnityEngine.SceneManagement;
+SceneManager.LoadScene("Home");
+</pre>
+
+
 ## svn
 [svn管理](http://blog.csdn.net/derxiu_xiu/article/details/52369225)
 
