@@ -1,5 +1,37 @@
 # unity3d
 
+
+## RectTransform 操作
+
+### 改变位置
+1.改变RectTransform的top
+
+GetComponent<RectTransform>().offsetMax = new Vector2(GetComponent<RectTransform>().offsetMax.x, top);
+
+2.改变RectTransform的bottom
+
+GetComponent<RectTransform>().offsetMin = new Vector2(GetComponent<RectTransform>().offsetMin.x, bottom);
+
+3.改变RectTransform的width，height
+
+GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+
+4.改变RectTransform的pos
+
+GetComponent<RectTransform>().anchoredPosition3D = new Vector3(posx,posy,posz);
+
+GetComponent<RectTransform>().anchoredPosition = new Vector2(posx,posy);
+
+### 改变大小
+GetComponent<RectTransform>().sizeDelta = new Vector2(x, y)
+
+
+## 获取场景根节点下的对象列表
+<pre>
+var arr = SceneManager.GetActiveScene().GetRootGameObjects();
+</pre>
+
+
 ## 场景跳转
 
 <pre>
