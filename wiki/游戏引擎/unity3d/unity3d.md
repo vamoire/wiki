@@ -1,6 +1,20 @@
 # unity3d
 
 
+## 修改重力
+
+### 修改世界重力
+<pre>
+Physics2D.gravity
+</pre>
+
+### 修改物体重力
+<pre>
+Rigidbody2D rb2d;
+rb2d.gravityScale = 1.0f;
+</pre>
+
+
 ## RectTransform 操作
 
 ### 改变位置
