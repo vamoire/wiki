@@ -1,6 +1,25 @@
 # unity3d
 
 
+## 施加力
+
+### 持续施加
+<pre>
+	void FixedUpdate()
+	{
+        Rigidbody2D rb2d;
+		//施加力
+        rb2.AddForce(offset);
+    }
+</pre>
+
+### 瞬间施加
+<pre>
+    Rigidbody2D rb2d;
+    //施加力
+    rb2.AddForce(offset, ForceMode2D.Impulse);
+</pre>
+
 ## 修改重力
 
 ### 修改世界重力
