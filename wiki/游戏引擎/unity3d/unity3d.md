@@ -1,5 +1,45 @@
 # unity3d
 
+## Unity学习
+
+[Unity学习](https://unity3d.com/cn/learn/live-training)
+
+
+## Text 文字标签
+
+Tag 	| Description | 	Example | 	Notes
+-|-|-|-
+b 	| Renders the text in boldface.| 	   We are <b>not</b> amused. 	|
+i 	| Renders the text in italics. 	|   We are <i>usually</i> not amused.| 	
+size |	Sets the size of the text according to the parameter value, given in pixels. |	   We are <size=50>largely</size> unaffected. |	Although this tag is available for Debug.Log, you will find that the line spacing in the window bar and Console looks strange if the size is set too large.
+color 	|Sets the color of the text according to the parameter value. The color can be specified in the traditional HTML format.    #rrggbbaa …where the letters correspond to pairs of hexadecimal digits denoting the red, green, blue and alpha (transparency) values for the color. For example, cyan at full opacity would be specified by 	 | <color=#00ffffff>…	| Another option is to use the name of the color. This is easier to understand but naturally, the range of colors is limited and full opacity is always assumed.    <color=cyan>… The available color names are given in the table below.
+
+## GameObject可见性 activeSelf activeInHierarchy
+
+activeSelf| parent可见 | parent不可见
+-|-|-
+child可见 | true | true
+child不可见| false | false
+
+activeInHierarchy| parent可见 | parent不可见
+-|-|-
+child可见 | true | false
+child不可见| false | false
+
+
+## 动画播放以及动画拼接播放
+
+[动画播放以及动画拼接播放](https://www.jianshu.com/p/72173e646f92)
+
+
+## JSON转换异常
+
+[Newtonsoft.Json部分操作系统不支持解决](http://blog.csdn.net/rnzuozuo/article/details/20455629)
+
+[private static System.ComponentModel.Int64Converter _unused = new System.ComponentModel.Int64Converter();](http://blog.csdn.net/huutu/article/details/43986079)
+
+[Unity上同时兼容Android和IOS的JSON库](http://blog.csdn.net/kakashi8841/article/details/21877131)
+
 
 ## 施加力
 
