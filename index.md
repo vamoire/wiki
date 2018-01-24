@@ -1,21 +1,16 @@
 # 未完成
 
-## TODO
-
-
 ## 微信公众平台（小程序开发）
 
 - [微信公众平台](https://mp.weixin.qq.com/wxopen/initprofile?action=home&lang=zh_CN&token=39991709)
 
-- [TeamViewer](https://www.teamviewer.com/zhCN/)
-363 385 584
-8389
-
+- [TeamViewer](https://www.teamviewer.com/zhCN/)
+    363 385 584
+    8389
 
 ## 测试账号
 ios11  新建测试沙盒账号：game@buytest.com   Game123456
 lucktowntest@test.com Gametest123456
-
 
 ## 新疯狂点
 疯狂点2017
@@ -26,11 +21,11 @@ Apple ID
 为您的 App 自动生成的 ID。
 1306419198
 
-1个游戏点 
+1个游戏点
 com.lucktown.CrazyClickNEW.OnePoint
-3个游戏点 
+3个游戏点
 com.lucktown.CrazyClickNEW.ThreePoint
-6个游戏点 
+6个游戏点
 com.lucktown.CrazyClickNEW.SixPoint
 
 WeChat
@@ -45,21 +40,13 @@ Sina
 3834007794
 353ea2a1a797b0453a99277c9a2ae2ac
 
+ ##Apple下载地址
+[Apple下载地址格式](https://itunes.apple.com/app/id1306419198)
 
-https://itunes.apple.com/app/id1306419198
+ ##游戏策划
+[解开菱形结](http://www.4399.com/flash/190981_3.htm)
 
-
-
-
-## 游戏策划
-解开菱形结
-http://www.4399.com/flash/190981_3.htm
-
-## 待实现
-vnc://192.168.102.29/
-
-
-##组合课件
+ ##组合课件
 1.分享 友盟key、微信key、QQkey、微博key
 2.appleID
 3.内购去广告ID
@@ -71,7 +58,7 @@ vnc://192.168.102.29/
 9.关卡解锁规则
 10.图标
 
-##挂画
+ ##挂画
 1.分享 友盟key、微信key、QQkey、微博key
 2.appleID
 3.内购去广告ID
@@ -80,9 +67,7 @@ vnc://192.168.102.29/
 6.分享文字及图片
 7.图标
 
-
-
-## github
+ ##github
 [GitHub Android APP](https://play.google.com/store/apps/details?id=com.github.mobile )
 
 [GitHub Android APP Code](https://github.com/github/android)

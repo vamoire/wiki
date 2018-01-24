@@ -4,15 +4,75 @@
 
 [Unity学习](https://unity3d.com/cn/learn/live-training)
 
+## 场景过度动画
+
+[场景过度动画](http://blog.csdn.net/u013224660/article/details/49618715)
+
+## 线程（Thread）和协程（Coroutine）
+```
+D.S.Qiu觉得使用协程的作用一共有两点：1）延时（等待）一段时间执行代码；2）等某个操作完成之后再执行后面的代码。总结起来就是一句话：控制代码在特定的时机执行。
+
+很多初学者，都会下意识地觉得协程是异步执行的，都会觉得协程是C# 线程的替代品，是Unity不使用线程的解决方案。
+
+所以首先，请你牢记：协程不是线程，也不是异步执行的。协程和 MonoBehaviour 的 Update函数一样也是在MainThread中执行的。使用协程你不用考虑同步和锁的问题。
+```
+
+## Coroutine 常用yield返回值
+```
+常用的有：null，WaitForSeconds，WaitForEndOfFrame，WaitForFixedUpdate，Another Coroutine，WWW
+
+1.null
+它是会挂起一帧，下一帧会继续执行。
+
+2.WaitForSeconds
+
+它的用法如：yield return new WaitForSeconds(2f);，这样就会让当前Coroutine函数挂起2秒。
+
+3.WaitForEndOfFrame
+
+它的用法和null是一样的效果。
+
+4.WaitForFixedUpdate
+
+它和null类似，但是不是一帧，而是一个Fixed帧时间。
+
+5.Another Coroutine
+
+这个就是可以在悬挂的时候执行另一个Coroutine函数，知道Another Coroutine执行完毕才会继续执行。
+
+6.WWW
+
+这个会挂起等待一个网络响应，完毕以后会继续执行。
+
+最后，注意一点，最好将协同代码写在执行层面，避免一些不要的麻烦。
+```
+
+## 龙骨DragonBones 事件
+```
+var com = obj.GetComponentInChildren<UnityArmatureComponent>();
+string name = "zhuangji";
+if (com && com.animation.HasAnimation(name)) {
+    var ret = com.animation.Play(name, 1);
+    com.AddDBEventListener(EventObject.COMPLETE, (string type, EventObject e)=>{
+        if(e.animationState.name == name)
+        {
+            obj.SetActive(false);
+        }
+    });
+}
+else {
+    obj.SetActive(false);
+}
+```
 
 ## Text 文字标签
 
-Tag 	| Description | 	Example | 	Notes
+Tag | Description | Example | Notes
 -|-|-|-
-b 	| Renders the text in boldface.| 	   We are <b>not</b> amused. 	|
-i 	| Renders the text in italics. 	|   We are <i>usually</i> not amused.| 	
-size |	Sets the size of the text according to the parameter value, given in pixels. |	   We are <size=50>largely</size> unaffected. |	Although this tag is available for Debug.Log, you will find that the line spacing in the window bar and Console looks strange if the size is set too large.
-color 	|Sets the color of the text according to the parameter value. The color can be specified in the traditional HTML format.    #rrggbbaa …where the letters correspond to pairs of hexadecimal digits denoting the red, green, blue and alpha (transparency) values for the color. For example, cyan at full opacity would be specified by 	 | <color=#00ffffff>…	| Another option is to use the name of the color. This is easier to understand but naturally, the range of colors is limited and full opacity is always assumed.    <color=cyan>… The available color names are given in the table below.
+b | Renders the text in boldface.| We are `<b>not</b>` amused. |
+i | Renders the text in italics. | We are `<i>usually</i>` not amused. |
+size | Sets the size of the text according to the parameter value, given in pixels. | We are `<size=50>largely</size>` unaffected. | Although this tag is available for Debug.Log, you will find that the line spacing in the window bar and Console looks strange if the size is set too large.
+color |Sets the color of the text according to the parameter value. The color can be specified in the traditional HTML format.    #rrggbbaa …where the letters correspond to pairs of hexadecimal digits denoting the red, green, blue and alpha (transparency) values for the color. For example, cyan at full opacity would be specified by | `<color=#00ffffff>…` | Another option is to use the name of the color. This is easier to understand but naturally, the range of colors is limited and full opacity is always assumed.    `<color=cyan>…` The available color names are given in the table below.
 
 ## GameObject可见性 activeSelf activeInHierarchy
 
@@ -44,21 +104,21 @@ child不可见| false | false
 ## 施加力
 
 ### 持续施加
-<pre>
-	void FixedUpdate()
-	{
-        Rigidbody2D rb2d;
-		//施加力
-        rb2.AddForce(offset);
-    }
-</pre>
-
-### 瞬间施加
-<pre>
+```	
+void FixedUpdate()
+{
     Rigidbody2D rb2d;
     //施加力
-    rb2.AddForce(offset, ForceMode2D.Impulse);
-</pre>
+    rb2.AddForce(offset);
+}
+```
+
+### 瞬间施加
+```
+Rigidbody2D rb2d;
+//施加力
+rb2.AddForce(offset, ForceMode2D.Impulse);
+```
 
 ## 修改重力
 
