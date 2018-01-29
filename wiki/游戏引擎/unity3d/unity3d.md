@@ -4,11 +4,121 @@
 
 [Unity学习](https://unity3d.com/cn/learn/live-training)
 
+
+## Unity 路径
+
+项目根目录路径
+```
+System.Environment.CurrentDirectory
+```
+
+Assets 文件夹的绝对路径
+```
+Application.dataPath
+```
+
+StreamingAssets 文件夹的绝对路径
+```
+case 1:
+#if UNITY_EDITOR
+	Application.streamingAssetsPath + "/" + path;
+#elif UNITY_IPHONE
+	Application.streamingAssetsPath + "/Raw/" + path;
+#elif UNITY_ANDROID
+	Application.streamingAssetsPath + "/" + path;
+#endif
+
+case 2:
+#if UNITY_EDITOR
+string filepath = Application.dataPath +"/StreamingAssets"+"/my.xml";
+#elif UNITY_IPHONE
+ string filepath = Application.dataPath +"/Raw"+"/my.xml";
+#elif UNITY_ANDROID
+ string filepath = "jar:file://" + Application.dataPath + "!/assets/"+"/my.xml;
+```
+
+Application.persistentDataPath
+```
+Application.streamingAssetsPath + "/" + path;
+```
+
+缓存路径
+```
+Application.temporaryCachePath
+```
+
+以上各路径中的资源加载方式都可以用WWW类加载，但要注意各个平台路径需要加的访问名称，例如Android平台的路径前要加"jar:file://"，其他平台使用"file://"。以下是各路径在各平台中的具体位置信息：
+```
+Android平台
+
+Application.dataPath :  /data/app/xxx.xxx.xxx.apk
+Application.streamingAssetsPath :  jar:file:///data/app/xxx.xxx.xxx.apk/!/assets
+Application.persistentDataPath :  /data/data/xxx.xxx.xxx/files
+Application.temporaryCachePath :  /data/data/xxx.xxx.xxx/cache
+IOS平台
+Application.dataPath :                    Application/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/xxx.app/Data
+Application.streamingAssetsPath : Application/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/xxx.app/Data/Raw
+Application.persistentDataPath :    Application/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/Documents
+Application.temporaryCachePath : Application/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/Library/Caches
+Windows Web Player
+Application.dataPath :  file:///D:/MyGame/WebPlayer (即导包后保存的文件夹，html文件所在文件夹)
+Application.streamingAssetsPath : 
+Application.persistentDataPath : 
+Application.temporaryCachePath : 
+```
+
+## 声音播放
+```
+_bgmObject = new GameObject("BGM");
+DontDestroyOnLoad(_bgmObject);
+var source = _bgmObject.AddComponent<AudioSource>();
+source.clip = Resources.Load("框架BGM", typeof(AudioClip)) as AudioClip;
+source.loop = true;
+source.Play();
+```
+
+## 遍历场景中的所有对象
+```
+//遍历场景中的所有对象 Resources.FindObjectsOfTypeAll
+//遍历场景中显示的对象
+Button[] buttons = FindObjectsOfType(typeof(Button)) as Button[];
+foreach (Button item in buttons)
+{
+    item.onClick.AddListener(()=>{
+        Debug.Log("button");
+    });
+}
+```
+
+## 音效 格式
+
+Unity3D游戏引擎一共支持4个音乐格式的文件
+.AIFF  适用于较短的音乐文件可用作游戏打斗音效
+.WAV  适用于较短的音乐文件可用作游戏打斗音效
+.MP3  适用于较长的音乐文件可用作游戏背景音乐
+.OGG  适用于较长的音乐文件可用作游戏背景音乐
+
+## Plugins
+[Plugins](http://blog.csdn.net/leonwei/article/details/39232969)
+
+## dll import
+[dllimport](https://docs.unity3d.com/Manual/30_search.html?q=dllimport)
+
 ## 场景过度动画
 
 [场景过度动画](http://blog.csdn.net/u013224660/article/details/49618715)
 
 ## 线程（Thread）和协程（Coroutine）
+```
+StartCoroutine(DoSomething());
+IEnumerator DoSomething() {
+    //do something
+    yield return new WaitForSeconds(3);
+    //do something
+}
+```
+
+
 ```
 D.S.Qiu觉得使用协程的作用一共有两点：1）延时（等待）一段时间执行代码；2）等某个操作完成之后再执行后面的代码。总结起来就是一句话：控制代码在特定的时机执行。
 

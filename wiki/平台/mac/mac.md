@@ -1,5 +1,8 @@
 # MAC
 
+## SVN服务器搭建
+[SVN服务器搭建](https://www.cnblogs.com/czq1989/p/4913692.html)
+
 ## 安装bundle文件
 需要安装VMware Workstation for Linux on Ubuntu，文件是Bundle格式，由于我是新手不知怎样安装，在网上找了不少资料，竟然不能执行。
 　　解决：

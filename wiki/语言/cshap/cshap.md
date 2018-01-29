@@ -1,5 +1,15 @@
 # C# #
 
+## Action
+```
+System.Action action = ()=>{
+
+};
+
+System.Action OnAction += action;
+System.Action OnAction -= action;
+```
+
 ## C#中ToString()格式详解
 
 [C#中ToString()格式详解](https://www.cnblogs.com/huangting2009/archive/2009/02/09/1386596.html)
