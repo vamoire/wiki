@@ -4,6 +4,9 @@
 
 [Unity学习](https://unity3d.com/cn/learn/live-training)
 
+## 着色器 Shader
+[Unity3D Shader入门指南](https://onevcat.com/2013/07/shader-tutorial-1/)
+
 
 ## Unity 路径
 
