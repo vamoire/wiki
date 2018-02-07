@@ -1,5 +1,8 @@
 # unity3d
 
+获取是否正在播放音乐
+unity Coroutine机制
+
 ## Unity学习
 
 [Unity学习](https://unity3d.com/cn/learn/live-training)
@@ -7,6 +10,7 @@
 ## 着色器 Shader
 [Unity3D Shader入门指南](https://onevcat.com/2013/07/shader-tutorial-1/)
 
+[过场动画](http://blog.csdn.net/u013224660/article/details/49618715)
 
 ## Unity 路径
 
