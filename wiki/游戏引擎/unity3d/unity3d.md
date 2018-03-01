@@ -3,6 +3,27 @@
 获取是否正在播放音乐
 unity Coroutine机制
 
+## WebGL文件读取
+导出Webgl版本Application.streamingAssetsPath文件读取
+[Application.streamingAssetsPath and WebGL build](https://stackoverflow.com/questions/43693213/application-streamingassetspath-and-webgl-build)
+
+```
+IEnumerator loadStreamingAsset(string fileName)
+{
+    string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, fileName);
+
+    string result;
+    if (filePath.Contains("://") || filePath.Contains(":///"))
+    {
+        WWW www = new WWW(filePath);
+        yield return www;
+        result = www.text;
+    }
+    else
+        result = System.IO.File.ReadAllText(filePath);
+}
+```
+
 ## Unity学习
 
 [Unity学习](https://unity3d.com/cn/learn/live-training)
