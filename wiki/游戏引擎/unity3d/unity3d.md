@@ -1,7 +1,18 @@
 # unity3d
 
-获取是否正在播放音乐
-unity Coroutine机制
+## 3d模型碰撞检测
+[Unity3D----导入模型的碰撞检测](http://blog.csdn.net/menuconfig/article/details/7995047)
+
+
+## 加载3d模型及动画 fbx 
+[3D模型的使用——FBX的使用与Animation设置 ](http://blog.csdn.net/yongh701/article/details/73001312)
+
+## mac unity3d 双开
+shell
+```
+cd ~
+open -n /applications/Unity/Unity.app
+```
 
 ## WebGL文件读取
 导出Webgl版本Application.streamingAssetsPath文件读取
