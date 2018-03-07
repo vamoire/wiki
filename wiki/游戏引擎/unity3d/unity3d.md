@@ -1,5 +1,8 @@
 # unity3d
 
+## 水 软体
+首先Unity中自带的Water (Pro Only)和Water (Basic)包都是材质(shader)，是视觉上的水面表现。 要想完成你这个任务，需要流体物理模拟（Fluid Physics 或 Liquid Physics）。 可以去 Assets Store 上看看 Fluvio 这个插件，有免费版和示例工程。
+
 ## 3d模型碰撞检测
 [Unity3D----导入模型的碰撞检测](http://blog.csdn.net/menuconfig/article/details/7995047)
 
