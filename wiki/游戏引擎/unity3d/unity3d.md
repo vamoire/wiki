@@ -1,5 +1,25 @@
 # unity3d
 
+
+## Rigidbody如何使用代码冻结位置和旋转
+```
+ 首先得到刚体组件
+
+rigidbody = this.GetComponent<Rigidbody> ();
+
+刚体里面的约束条件给他赋你想约束的值 
+
+rigidbody.constraints=RigidbodyConstraints.FreezePositionY;
+
+如果你想不冻结某个值其他都冻结的话
+
+rigibody.constraints=~RigidbodyConstraints.FreezePositionY;
+```
+
+## FBX模型播放动画时的碰撞判断
+Collider关联到骨骼
+
+
 ## 水 软体
 首先Unity中自带的Water (Pro Only)和Water (Basic)包都是材质(shader)，是视觉上的水面表现。 要想完成你这个任务，需要流体物理模拟（Fluid Physics 或 Liquid Physics）。 可以去 Assets Store 上看看 Fluvio 这个插件，有免费版和示例工程。
 
