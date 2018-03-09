@@ -1,6 +1,13 @@
 # unity3d
 
 
+## unity3D摄像机的快捷键调整
+
+CTRL+SHIFT+F
+
+在SCENE窗口调整好画面之后，选中相机，使用快捷键，然后就让GAME窗口显示的与SCENE窗口完全一致。
+
+
 ## Rigidbody如何使用代码冻结位置和旋转
 ```
  首先得到刚体组件
