@@ -11,6 +11,9 @@
 * [cocos2d](wiki/游戏引擎/cocos2d/cocos2d.md)
 * [unity3d](wiki/游戏引擎/unity3d/unity3d.md)
  - - -
+* #服务器
+* [游戏服务器](wiki/游戏服务器/游戏服务器.md)
+ - - -
 * #平台
 * [iOS](wiki/平台/ios/ios.md)
 * [Android](wiki/平台/android/android.md)
