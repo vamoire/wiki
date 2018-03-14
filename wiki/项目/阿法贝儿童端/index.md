@@ -5,3 +5,7 @@
 
 ## 测试代码
 [批量注册用户](批量注册用户.md)
+
+## Lua课件开发模板
+[game.Lua](game.lua)
+[LessonEx.lua](LessonEx.lua)
