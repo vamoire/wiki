@@ -1,5 +1,22 @@
 # unity3d
 
+## tilemap 地图编辑
+```
+1，新建地图
+hierarchy对象窗口->create->2d object->tile map
+2，打开笔刷窗口
+window->tile palette
+3，新建一个笔刷元素
+project->create->tile
+4,新建sprint
+project->create->squer 此处也可以选择其他的形状
+5,将tile的shprite设置为新建的sprite
+6，将tile拖进 tile palette笔刷窗口
+7，在grid中绘制地图
+8，点击hierarchy窗口中的tilemap->添加组件 tilemap collider2d 添加碰撞
+```
+[unity3d 2017 tilemap 地图编辑](http://blog.csdn.net/lengyoumo/article/details/78907794)
+
 
 ## unity3D摄像机的快捷键调整
 
