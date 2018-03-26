@@ -1,5 +1,130 @@
 # unity3d
 
+## Unity3D中texture2D函数使用详解
+```
+在Unity3D中可以使用脚本创建texture2D贴图，并对像素进行操作。
+
+
+构造函数
+
+Texture2D(int width, int height);
+
+Texture2D(int width, int height, TextureFormat format, bool mipmap);
+
+Texture2D(int width, int height, TextureFormat format, bool mipmap, bool linear);
+
+
+方法
+
+对像素的操作
+
+1.获取像素颜色
+
+Color GetPixel(int x, int y);
+
+Returns pixel color at coordinates (x, y).
+
+2.获取正交化坐标系下像素颜色
+
+Color GetPixelBilinear(float u, float v);
+
+Returns filtered pixel color at normalized coordinates (u, v).
+
+多用于处理得知多边形UV坐标时对像素的处理
+
+3.获取一个区块的像素颜色
+
+Color[] GetPixels(int miplevel = 0);
+
+Get a block of pixel colors.
+
+获取以x,y 为起始点，大小为width,height的一个区块，
+
+返回的是一个数组，数组内颜色的点顺序为从左至右，从下至上
+
+4.获取（指定mipmap level级别）的整张贴图的像素颜色（使用Color32格式）
+
+Color32[] GetPixels32(int miplevel = 0);
+
+Get a block of pixel colors in Color32 format.
+
+读取速度比反复使用getPixel读取速度快
+
+5.设置像素颜色
+
+void SetPixel(int x, int y, Color color);
+
+Sets pixel color at coordinates (x,y).
+
+6.设置（指定mipmap level级别）的整张贴图的像素颜色
+
+void SetPixels(Color[] colors, int miplevel = 0);
+
+Set a block of pixel colors.
+
+设置指定mipmap level下的整张贴图颜色
+
+7.设置（指定mipmap level级别）的整张贴图的像素颜色（使用Color32格式）
+
+void SetPixels32(Color32[] colors, int miplevel = 0);
+
+Set a block of pixel colors.
+
+
+对贴图的操作
+
+1.当对贴图的像素操作后必须调用的函数，使操作生效。
+
+void Apply(bool updateMipmaps = true, bool makeNoLongerReadable = false);
+
+Actually apply all previous SetPixel and SetPixels changes.
+
+2.将贴图压缩成DXT格式
+
+void Compress(bool highQuality);
+
+Compress texture into DXT format.
+
+3.将贴图转码为PNG格式
+
+byte[] EncodeToPNG();
+
+Encodes this texture into PNG format.
+
+4.加载一张贴图
+
+bool LoadImage(byte[] data);
+
+Loads an image from a byte array.
+
+可以加载的格式为:JPG,PNG
+
+5.将多张贴图打包到一张图集中
+
+Rect[] PackTextures(Texture2D[] textures, int padding, int maximumAtlasSize = 2048, bool makeNoLongerReadable = false);
+
+Packs multiple Textures into a texture atlas.
+
+6.将屏幕色读入到贴图
+
+void ReadPixels(Rect source, int destX, int destY, bool recalculateMipMaps = true);
+
+Read screen pixels into the saved texture data.
+
+rect source 可以用来创建需要截取的屏幕区域，
+
+destX，destY 表明了渲染到贴图的起始点，（0,0）点为屏幕的左下角。
+
+readPixels函数主要可以配合camera.OnPostRender进行截图及RenderToTexture操作,
+
+7.重新定义贴图
+
+bool Resize(int width, int height, TextureFormat format, bool hasMipMap);
+
+Resizes the texture.
+```
+[Unity3D中texture2D函数使用详解](https://blog.csdn.net/laverfever/article/details/19076663)
+
 ## tilemap
 [教程](http://gad.qq.com/article/detail/38693)
 [Unity 2017.2新功能](http://gad.qq.com/article/detail/34775)
