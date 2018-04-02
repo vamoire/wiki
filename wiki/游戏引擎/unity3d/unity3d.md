@@ -1,5 +1,39 @@
 # unity3d
 
+http://www.4399.com/flash/190144_1.htm
+http://www.4399.com/flash/190981_3.htm
+
+## Mathf.Lerp 插值
+Mathf.Lerp 插值
+```
+static functionLerp (from : float, to : float, t : float) : float
+
+基于浮点数t返回a到b之间的插值，t限制在0～1之间。当t = 0返回from，当t = 1 返回to。当t = 0.5 返回from和to的平均值。
+```
+进度条动画
+```
+if (slider && slider.value != sliderValue) {
+    float t = Time.deltaTime * moveSpeed / Mathf.Abs(sliderValue - slider.value);
+    slider.value = Mathf.Lerp(slider.value, sliderValue, t);
+}
+```
+
+
+## 相机跟随 Cinemachine
+[相机跟随多个目标/单个目标/跟随切换](https://blog.csdn.net/l773575310/article/details/78068113?locationNum=6&fps=1)
+[2d-follow-camera](https://unity3d.com/cn/learn/tutorials/topics/2d-game-creation/2d-follow-camera-w-cinemachine)
+
+
+## 自动寻路 NavMeshAgent
+[NavMeshAgent 寻路导航组件](https://blog.csdn.net/u013628121/article/details/53105022)
+[unity的学习之NavMeshAgent,自动寻路](https://www.2cto.com/kf/201707/661343.html)
+
+## 碰撞过滤
+```
+为GameObject设置不同的Layers，在菜单找到Edit->Project Settings->Physics2D->Layer Collision Matrix，选择需要忽略的碰撞
+```
+
+
 ## Unity3D中texture2D函数使用详解
 ```
 在Unity3D中可以使用脚本创建texture2D贴图，并对像素进行操作。
