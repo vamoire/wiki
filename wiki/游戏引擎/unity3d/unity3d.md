@@ -3,6 +3,115 @@
 http://www.4399.com/flash/190144_1.htm
 http://www.4399.com/flash/190981_3.htm
 
+## 3d声音 声音远近
+```
+3D声音
+
+3D立体声和2D声不同的地方是它是会随着距离衰减的，距离越近声音越大，距离越远声音越小。
+
+1: 声音: 背景音乐和音效;
+
+2: 声音文件支持的格式: ogg, mp3, wave, AIFF;
+
+　　ogg比较流行，很多安卓里面的声音使用ogg的格式是为了绕开mp3的版权
+
+　　ogg和mp3都比较常用
+
+　　wave和ogg、mp3比起来比较大，没有压缩的数字音乐，可以直接写到声卡里面
+
+3:音频管理器: Edit-->ProjectSetting--> Audio;和物理引擎一样有管理器
+
+   Global Volume: 全局播放的音量;
+
+   Volume Rolloff Scale: 衰减因子，越大，声音衰减越快；
+
+   Doppler Factor: 多普勒因子;模拟多普勒效应的监听效果:0关闭, 1 高速物体的多普勒效应会比较明显的监听的到;
+
+   Default Speak Mode: 设置扬声器模式;默认值为2(立体声, AudioSpeakModer); stereo立体声
+
+   System Sample Rate: (输出采样率);
+
+   DSP Buffer Size: 调整DSP缓冲区大小优化延迟和性能;越大效果越好
+
+   Max Virutal/Real Voices Count: 同时播放的真实声音的数量;虚拟的声音最后会和其他的声音混合在一起，所以比真实的声音多。
+
+   Disable Unity Audio: 是否使用音频;
+
+ 
+
+ 
+
+音频监听器
+
+类似于人的耳朵，把耳朵移动到哪里，就可以听到那里附近的声音，也可以比喻为话筒。如果场景中没有音频监听器，那么玩家是听不到声音的，即使那个物体正在发声。
+
+1: 音频监听器在3D世界中扮演话筒的角色，他接受场景中输入的音频源，通过设备的扬声器来播放声音;
+
+2: 当一个音频监听器挂载到场景中的一个游戏对象上，任何音源如果接近音频监听器，都会输出到计算机的扬声器中,每个场景中只能有一个音频监听器，一般会默认的添加到主摄像机上;这样摄像机拍到哪里我们就监听哪里的声音。
+
+　主摄像机初始化的时候也是带着Audio Listener组件的。
+
+3: AudioClip: 声音文件，就是声音的资源文件
+
+ 
+
+ 
+
+AudioSource(声源)
+
+我们需要对声音进行衰减，需要计算监听器与声源的距离，需要对一些声源做混合，就要使用AudioSource组件，帮助我们播放AudioClip(音频文件)
+
+1: 音频源: 在场景中播放音频剪辑,如果一个音频剪辑是一个3D，那么音频源就会在给定的位置，然后随着距离进行衰减,还可以在3D和2D之间进行切换;
+
+2: 创建一个音频源:
+
+    (1): 导入要播放的声音文件;
+
+    (2): 创建一个节点，并加上Audio-->Audio Source组件;
+
+    (3): 将AudioClip加入到AudioSource中；
+
+    (4): 代码控制播放;
+
+3:属性:
+
+  AudioClip: 要被播放的文件;
+
+  Output: 音频剪辑通过音频混合器输出;
+
+  Mute: 是否静音;
+
+  Play On Wake唤醒时播放;
+
+  loop: 是否循环播放;
+
+  Priority: 播放的优先级，0最高，256最低，默认128，优先级高的一般是重要的音效
+
+  Volume 音量 Pitch 音调 Stereo Pan立体声(-1左声道, 1右声道)
+
+  Spatial Blend(空间混合), 0为2D音效, 1为3D音效，2D音效不会做衰减
+
+  Spread: (3D)立体声在扬声器空间中的传播速度;
+
+  Volume Rolloff音量衰减模式: 对数(Logarithmic)，线性(Linear)和自定义模式(Custom)，自定义模式要自己加控制点。
+
+  Min Distance/Max Distance衰减的范围，衰减距离的 开始结束, 最小距离(声音保持最大量),最大距离(不再衰减)
+
+　　　　　　　　　　　　  当我们的音频监听器和声源的距离小于Min Distance的时候，都是最大声音，大于Max Distance的都是最小声音或者没有，这个取决于那个声音曲线的设置，一般自定义才可以设置超出Max距离后还有声音。
+
+　　　　　　　　　　　　  当我们调节Min Distance/Max Distance的时候，Scene视图里面的声源球的范围也会随之改变，两个球体之间的部分就是有衰减的部分。
+```
+
+## 网络连接
+```
+NetworkReachability网络可达性
+NetworkReachability.ReachableViaCarrierDataNetwork 通过运营商数据网络可达
+
+NetworkReachability.ReachableViaLocalAreaNetwork 通过局域网络可达(wifi)
+
+Application.internetReachability == NetworkReachability.NotReachable
+```
+
 ## Mathf.Lerp 插值
 Mathf.Lerp 插值
 ```
