@@ -46,8 +46,36 @@ namespace FFF.WebRequest
 			return cor;
 		}
 
+		public Coroutine Post<T>(string url, string postData, System.Action<bool,T> action) {
+			Coroutine cor = Post(url, postData, (bool ret, string json)=>{
+				T t = JsonConvert.DeserializeObject<T>(json);
+				action(ret, t);
+			});
+			return cor;
+		}
+		public Coroutine Post<T>(string url, WWWForm form, System.Action<bool,T> action) {
+			Coroutine cor = Post(url, form, (bool ret, string json)=>{
+				T t = JsonConvert.DeserializeObject<T>(json);
+				action(ret, t);
+			});
+			return cor;
+		}
+
 		public Coroutine Request(string url, System.Action<bool, string> action) {
 			Coroutine cor = StartCoroutine(GetText(url, (bool ret, string text)=>{
+				action(ret, text);
+			}));
+			return cor;
+		}
+
+		public Coroutine Post(string url, string postData, System.Action<bool, string> action) {
+			Coroutine cor = StartCoroutine(PostText(url, postData, (bool ret, string text)=>{
+				action(ret, text);
+			}));
+			return cor;
+		}
+		public Coroutine Post(string url, WWWForm form, System.Action<bool, string> action) {
+			Coroutine cor = StartCoroutine(PostForm(url, form, (bool ret, string text)=>{
 				action(ret, text);
 			}));
 			return cor;
@@ -63,6 +91,40 @@ namespace FFF.WebRequest
 
 		IEnumerator GetText(string url, System.Action<bool,string> action) {
 			UnityWebRequest www = UnityWebRequest.Get(url);
+			yield return www.SendWebRequest();
+	
+			if(www.isNetworkError || www.isHttpError) {
+				Debug.Log(www.error);
+				action(false, "");
+			}
+			else {
+				// Show results as text
+				Debug.Log(www.downloadHandler.text);
+				action(true, www.downloadHandler.text);
+				// Or retrieve results as binary data
+				// byte[] results = www.downloadHandler.data;
+			}
+		}
+
+		IEnumerator PostText(string url, string postData, System.Action<bool,string> action) {
+			UnityWebRequest www = UnityWebRequest.Post(url, postData);
+			yield return www.SendWebRequest();
+	
+			if(www.isNetworkError || www.isHttpError) {
+				Debug.Log(www.error);
+				action(false, "");
+			}
+			else {
+				// Show results as text
+				Debug.Log(www.downloadHandler.text);
+				action(true, www.downloadHandler.text);
+				// Or retrieve results as binary data
+				// byte[] results = www.downloadHandler.data;
+			}
+		}
+
+		IEnumerator PostForm(string url, WWWForm form, System.Action<bool,string> action) {
+			UnityWebRequest www = UnityWebRequest.Post(url, form);
 			yield return www.SendWebRequest();
 	
 			if(www.isNetworkError || www.isHttpError) {

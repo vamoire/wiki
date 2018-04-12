@@ -3,8 +3,16 @@
 http://www.4399.com/flash/190144_1.htm
 http://www.4399.com/flash/190981_3.htm
 
-## BMFont
+## 动画状态机
+```
+Animator animator = GetComponentInChildren<Animator>();
+//播放动画
+animator.Play("NetworkErrorHide");
+//控制状态机变量
+animator.SetBool("Close", true);
+```
 
+[判断一个动画播放结束](https://blog.csdn.net/W1095471150/article/details/52315935)
 
 ## CustomFont 自定义字体 fnt
 

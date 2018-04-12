@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 /// </summary>
 public class AppConfig : Config {
 
+	public static string BGMChangeNotification = "BGMChangeNotification";
+	public static string SoundChangeNotification = "SoundChangeNotification";
+
 	static AppConfig __appConfig = null;
 	public static AppConfig share {
 		get {

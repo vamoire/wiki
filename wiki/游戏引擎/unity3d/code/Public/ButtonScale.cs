@@ -16,6 +16,15 @@ public class ButtonScale : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Flash();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+
+	public void Flash() {
 		//button
 		Button button = GetComponent<Button>();
 		button.transition = Button.Transition.SpriteSwap;
@@ -23,10 +32,5 @@ public class ButtonScale : MonoBehaviour {
 		Sprite sprite = button.gameObject.GetComponent<Image>().sprite;
 		spriteState.pressedSprite = Tools.CreateMiniSprite(sprite, press);
 		button.spriteState = spriteState;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

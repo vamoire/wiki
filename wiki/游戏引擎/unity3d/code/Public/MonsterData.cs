@@ -13,6 +13,23 @@ public class MonsterData : Config {
         }
     }
 
+    /// <summary>
+    /// 获得角色信息
+    /// </summary>
+    /// <param name="monsterID">角色ID</param>
+    /// <returns>角色信息</returns>
+    public MonsterEntity GetMonster(int monsterID) {
+        MonsterEntity monster = null;
+        foreach (MonsterEntity item in MonsterList)
+        {
+            if (item.id == monsterID) {
+                monster = item;
+                break;
+            }
+        }
+        return monster;
+    }
+
     public string Version;
     public List<MonsterEntity> MonsterList;
 }
