@@ -3,6 +3,15 @@
 http://www.4399.com/flash/190144_1.htm
 http://www.4399.com/flash/190981_3.htm
 
+## 简单数据读写 PlayerPrefs
+```
+//写
+PlayerPrefs.SetInt("LevelIndex", 1);
+//读
+var levelIndex = PlayerPrefs.GetInt("LevelIndex",0);
+
+```
+
 ## 动画状态机
 ```
 Animator animator = GetComponentInChildren<Animator>();
