@@ -6,6 +6,8 @@ http://www.4399.com/flash/190981_3.htm
 ## 自动布局组件
 容器添加Layout Group组件
 子对象可以添加Layout Element组件设置最小尺寸
+相对于父容器宽高比Aspect Ratio Fitter
+[ Unity3D 官方文档 UGUI总览 自动布局组件的介绍 ](https://blog.csdn.net/u012632851/article/details/77008230)
 
 
 ## 导出设置
