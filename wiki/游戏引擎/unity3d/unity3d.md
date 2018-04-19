@@ -3,6 +3,17 @@
 http://www.4399.com/flash/190144_1.htm
 http://www.4399.com/flash/190981_3.htm
 
+## 自动布局组件
+容器添加Layout Group组件
+子对象可以添加Layout Element组件设置最小尺寸
+
+
+## 导出设置
+```
+1.关闭分辨率窗口
+点开unity3d主界面左上角按钮Edit按钮里Project setting 下 player 选项，在Inspec视图下调节Resolution  and presentation 里的 display Resolution Dialog 状态  选择Disabled
+```
+
 ## 颜色 透明度混合算法 RGBA
 ```
  Alpha 透明度混合算法，网上收集整理，分成以下三种：
@@ -801,15 +812,15 @@ rb2.AddForce(offset, ForceMode2D.Impulse);
 ## 修改重力
 
 ### 修改世界重力
-<pre>
+```
 Physics2D.gravity
-</pre>
+```
 
 ### 修改物体重力
-<pre>
+```
 Rigidbody2D rb2d;
 rb2d.gravityScale = 1.0f;
-</pre>
+```
 
 
 ## RectTransform 操作
@@ -838,17 +849,17 @@ GetComponent<RectTransform>().sizeDelta = new Vector2(x, y)
 
 
 ## 获取场景根节点下的对象列表
-<pre>
+```
 var arr = SceneManager.GetActiveScene().GetRootGameObjects();
-</pre>
+```
 
 
 ## 场景跳转
 
-<pre>
+```
 using UnityEngine.SceneManagement;
 SceneManager.LoadScene("Home");
-</pre>
+```
 
 
 ## svn
@@ -861,12 +872,12 @@ SceneManager.LoadScene("Home");
 
 ## Unity延时
 
-<pre>
+```
     //重复调用  
     InvokeRepeating("LaunchProjectile", 1,5);//1秒后调用LaunchProjectile () 函数，之后每5秒调用一次    
     //调用一次  
     Invoke("LaunchProjectile", 5);//5秒后调用LaunchProjectile () 函数  
-</pre>
+```
 
 - [Unity延时功能的几种实现](http://www.jianshu.com/p/e38b926a3b00)
 
@@ -874,7 +885,7 @@ SceneManager.LoadScene("Home");
 
 
 ## 平台及环境宏定义
-<pre>
+```
     #if UNITY_IOS || UNITY_ANDROID
     ...//这里的代码在IOS和Android平台都会编译
     #endif
@@ -882,7 +893,7 @@ SceneManager.LoadScene("Home");
     #if UNITY_ANDROID && UNITY_EDITOR
     ...//这里的代码只有在发布设置设置的是Android，且在编辑器里运行时才会编译
     #endif
-</pre>
+```
 
 
 ## Unity3D-在mac上使用VSCODE开发
@@ -898,7 +909,7 @@ SceneManager.LoadScene("Home");
 
 
 ## 跨场景不销毁对象 单例
-<pre>
+```
     using UnityEngine;
     using System.Collections;
     
@@ -911,39 +922,39 @@ SceneManager.LoadScene("Home");
             DontDestroyOnLoad(audio);
         }
     }
-</pre>
+```
 
 
 ## 类型转换
-<pre>
+```
     // string 2 float
     float f;
     bool ret = float.TryParse(num, out f);
-</pre>
+```
 
 
 ## Unity3d和iOS交互
 - unity3d调用iOS方法
 1、在unity中声明外部函数
-<pre>
+```
     // DllImport这个方法相当于是告诉Unity，有一个unityToIOS函数在外部会实现。
     // 使用这个方法必须要导入System.Runtime.InteropServices;
     // 传递数据只能用以string类型
     [DllImport("__Internal")]
     private static extern void unityToIOS (string str);
-</pre>
+```
 2、在iOS中实现外部函数
-<pre>
+```
     extern "C"
     {
         void functionName(char* str){
             // do something
         }
     }
-</pre>
+```
 
 - iOS调用unity3d方法
-<pre>
+```
     // UnitySendMessage("gameobject", "Method",msg);
     // 向unity发送消息
     // 参数一为unity脚本挂载的gameobject
@@ -951,13 +962,13 @@ SceneManager.LoadScene("Home");
     // 参数三为传递的数据，注意：传递的数据只能是char *类型
     const char* str = [[NSString stringWithFormat:@"10"] UTF8String];
     UnitySendMessage("Main Camera", "turnRight", str);
-</pre>
+```
 
 - iOS中暂停恢复unity3d方法
-<pre>
+```
     UnityPause(true)
     UnityPause(false)
-</pre>
+```
 
 
 ## 热更新方案
@@ -1015,52 +1026,58 @@ MonoBehaviour.OnTriggerEnter2D( Collider2D other )
 ![image](res/触发器.png)
 
 ## 查找对象
-<pre>
+```
     var followCamera = GameObject.Find ("RenderCamera");
-</pre>
+```
 
 ## 查找子对象
-<pre>
+```
 var temp = transform.Find("InfoText");
-</pre>
+```
 
 ## 添加预设体
-<pre>
+```
 GameObject obj = (GameObject)Instantiate (Resources.Load ("BodyS"));
 GameObject node = GameObject.Find ("Main Camera");
 obj.transform.parent = node.transform;
-</pre>
+```
 
 ## 动态加载资源
-<pre>
+```
 //资源放在Resources目录中 名称以unity中显示的名称为准
 AudioClip clip = (AudioClip)Resources.Load("T-ara - DAY BY DAY", typeof(AudioClip));
-</pre>
+```
 
 
 ## 删除对象
-<pre>
+```
 Destroy(gameObject)
-</pre>
+```
 
 ## 脚本所在的对象
-<pre>
+```
 this.gameObject
-</pre>
+```
 
 
 ## 添加组件
-<pre>
-<xmp>AudioSource source = gameObject.AddComponent<AudioSource>();</xmp>
-</pre>
+```
+AudioSource source = gameObject.AddComponent<AudioSource>();
+```
+
+## 删除组件
+```
+Destroy (gameObject);
+//Destroy (this);
+```
 
 ## 查找对象上的脚本/组件 查找组件 查找脚本
-<pre>
-<xmp>Player info = obj.GetComponent<Player>();</xmp>
-</pre>
+```
+Player info = obj.GetComponent<Player>();
+```
 
 ## 获取MAC地址
-<pre>
+```
 using UnityEngine;  
 using System.Collections;  
 using System.Net.NetworkInformation;  
@@ -1094,9 +1111,9 @@ public static string GetMacAddress()
 
     return physicalAddress;  
 } 
-</pre>
+```
 
-<pre>
+```
 NetworkInterface[] nis = NetworkInterface.GetAllNetworkInterfaces();  
 foreach(NetworkInterface ni in nis )  
 {  
@@ -1109,26 +1126,26 @@ foreach(NetworkInterface ni in nis )
     Debug.Log("Type ="+ ni.NetworkInterfaceType.ToString());  
     Debug.Log("Mac="+ni.GetPhysicalAddress().ToString());  
 }  
-</pre>
+```
 
 
 ## 随机数
-<pre>
+```
 Random.Range(0, Rang);
-</pre>
+```
 
 
 ## 获取时间
 Unity中时间处理使用的是System.Datetime
-<pre>
+```
 //取得现在的时间
 System.DateTime now = System.DateTime.Now;
 //得到任意时间的DateTime（年月日时分秒）
 System.DateTime date1 = new DateTime(2010,8,18,16,32,0,DateTimeKind.Local);
-</pre>
+```
 
 ## 点击到游戏对象的判断
-<pre>
+```
 Debug.DrawLine (Camera.main.ScreenToWorldPoint (UTouch.Point ()), Vector3.zero);
 RaycastHit2D hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (UTouch.Point ()), Vector2.zero);
 if (hit.collider != null) {
@@ -1138,12 +1155,12 @@ if (hit.collider != null) {
         change = true;
     }
 }
-</pre>
+```
 
 
 ## 现有类方法扩展
 方法参数中的this关键词
-<pre>
+```
 public static class Universal {
     //string to vector3
     public static Vector3 ToVector3(this string text) {
@@ -1155,11 +1172,11 @@ public static class Universal {
         return Vector3.zero;
     }
 }
-</pre>
+```
 
 ## 点击事件
 鼠标和触摸通用点击判断
-<pre>
+```
 public class UTouch {
     public static bool Began (){
         if (Input.GetMouseButtonDown (0)) {
@@ -1199,10 +1216,10 @@ public class UTouch {
         }
     }
 }
-</pre>
+```
 
 ## 文件读写
-<pre>
+```
 var fileAddress = Path.Combine (Application.persistentDataPath, "test.txt");
 var fileInfo = new FileInfo (fileAddress);
 StreamWriter w;
@@ -1221,7 +1238,7 @@ if (fileInfo.Exists) {
     Debug.Log (s);
     r.Close ();
 }
-</pre>
+```
 
 ## 目录权限
 iOS:
@@ -1246,7 +1263,7 @@ Application.temporaryCachePath :
 各目录权限：
 
 根目录：StreamingAssets文件夹
-<pre>
+```
 #if UNITY_EDITOR
 string filepath = Application.dataPath +"/StreamingAssets"+"/my.xml";
 #elif UNITY_IPHONE
@@ -1254,7 +1271,7 @@ string filepath = Application.dataPath +"/StreamingAssets"+"/my.xml";
 #elif UNITY_ANDROID
  string filepath = "jar:file://" + Application.dataPath + "!/assets/"+"/my.xml;
 #endif
-</pre>
+```
 根目录：Resources 文件夹
 可以使用Resources.Load("名字"); 把文件夹中的对象加载出来
 

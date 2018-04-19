@@ -1,5 +1,31 @@
 # C# #
 
+## 数组合并 List合并
+```
+//AddRange：添加实现了ICollection接口的一个集合的所有元素到指定集合的末尾
+
+List<Button> list = new List<Button>();
+
+Button[] buttons = GameObject.FindObjectsOfType<Button>();
+list.AddRange(buttons);
+
+buttons = Resources.FindObjectsOfTypeAll<Button>();
+list.AddRange(buttons);	
+```
+
+## Array List 互转
+```
+1,从System.String[]转到List<System.String>
+System.String[] str={"str","string","abc"};
+List<System.String> listS=new List<System.String>(str);
+
+2, 从List<System.String>转到System.String[]
+List<System.String> listS=new List<System.String>();
+listS.Add("str");
+listS.Add("hello");
+System.String[] str=listS.ToArray();
+```
+
 ## Action
 ```
 System.Action action = ()=>{
