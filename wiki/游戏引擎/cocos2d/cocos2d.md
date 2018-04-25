@@ -1,5 +1,47 @@
 # cocos2d
 
+## Android返回按钮监听
+[Cocos2d-x android使用onKeyDown监听返回键实现二次返回退出](https://blog.csdn.net/canglang_123/article/details/43971023)
+```
+//1.修改源码framework/scocos2d-x/cocos/2d/platform/android/java/src/org/cocos2dx/lib/Cocos2dx/GLSurfaceView.java
+
+@Override  
+public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {  
+    switch (pKeyCode) {  
+        case KeyEvent.KEYCODE_BACK:  
+            //cocos不接收返回按键时间
+               return false;
+        case KeyEvent.KEYCODE_MENU:  
+            this.queueEvent(new Runnable() {  
+             @Override  
+            public void run() {  
+                Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(pKeyCode);  
+            }  
+        });  
+        return true;  
+        default:  
+            return super.onKeyDown(pKeyCode, pKeyEvent);  
+    }
+} 
+
+
+//2.在android的AppActivity中重写onKeyDown方法
+    private long mkeyTime = 0;  
+    public boolean onKeyDown(int keyCode, KeyEvent event) {  
+        //二次返回退出  
+        if (keyCode == KeyEvent.KEYCODE_BACK) {  
+            if ((System.currentTimeMillis() - mkeyTime) > 2000) {  
+                mkeyTime = System.currentTimeMillis();  
+                Toast.makeText(this, "再按一次退出游戏", Toast.LENGTH_LONG).show();  
+            } else {  
+                finish();  
+                System.exit(0);  
+            }  
+            return false;  
+        }  
+        return super.onKeyDown(keyCode, event);  
+    }  
+```
 
 ## 修改背景颜色
 * 搜索glClearColor
@@ -7,6 +49,38 @@
 * // default clear color
 * _clearColor = Color4F::BLACK;
 
+
+## 修改应用包名
+```
+修改proj.android\AndroidManifest.xml中的包名
+修改AppActivity.java等java文件中的引用包名，例如
+import com.test.test.R;
+```
+
+## 修改安装包名字
+```
+项目路径\proj.android\build.xml
+
+<project name="安装包名"default="help">
+```
+ 
+## 修改游戏名/程序名
+```
+项目路径\proj.android\res\value\strings.xml
+
+<string name="app_name">程序名</string>
+```
+
+## 修改程序图标
+```
+项目路径\proj.android\res目录下，3个文件夹对应3个分辨率。执行打包之后，项目路径\proj.android\bin\res下的3个文件夹会自动地更新。
+```
+
+## 命令行打包
+```
+cd /Users/apple/Downloads/cocos2d-x-3.15.1/tools/cocos2d-console/bin 
+python cocos.py compile -s /Users/apple/Desktop/AFBChildEn  -p android --ap android-19
+```
 
 ## 二维码生成
 
