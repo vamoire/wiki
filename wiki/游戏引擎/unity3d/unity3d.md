@@ -325,6 +325,32 @@ NetworkReachability.ReachableViaLocalAreaNetwork 通过局域网络可达(wifi)
 Application.internetReachability == NetworkReachability.NotReachable
 ```
 
+## Vector3.MoveTowards 移向
+```
+using UnityEngine;
+using System.Collections;
+ 
+public class ExampleClass : MonoBehaviour {
+    public Transform target;
+    public float speed;
+    void Update() {
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+    }
+}
+```
+
+## Mathf.MoveTowards 移向
+```
+var target = 20.0;
+var speed = 5.0;
+
+function Update() {
+	transform.position = Vector3(Mathf.MoveTowards
+	(transform.position.x, target, speed * Time.deltaTime), 0, 0);
+}
+```
+
 ## Mathf.Lerp 插值
 Mathf.Lerp 插值
 ```
