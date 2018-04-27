@@ -3,6 +3,224 @@
 http://www.4399.com/flash/190144_1.htm
 http://www.4399.com/flash/190981_3.htm
 
+## 提取游戏资源
+[提取游戏资源](http://www.xuanyusong.com/archives/3618)
+
+## UnityWebRequest下载纹理  
+```
+string url = "https://api.mapbox.com/v4/mapbox.terrain-rgb/" + zoomLevel + "/" + xTile + "/" + yTile + ".pngraw?access_token=pk.eyJ1Ijoiem91eGluIiwiYSI6ImNqMWJ0dGtjeTAwYWIycXBjaGd6OWlndnAifQ.DCP6WtZGc-4NGlIHSkMd-Q";
+
+//如果本地已存在则加载本地，本地不存在从网上下载
+Texture2D tex;
+string filePath = GetLocalFilePathForUrl (url, xTile, yTile, zoomLevel);
+if (File.Exists (filePath)) {			
+    string pathforwww = "file:///" + filePath;
+    WWW wwwElevation = new WWW (pathforwww);
+    yield return wwwElevation;
+    if (!string.IsNullOrEmpty (wwwElevation.error)) {
+        LoadingElevation = false;
+        yield break;
+    }
+    tex = wwwElevation.texture;
+} else {
+    UnityWebRequest www = UnityWebRequest.GetTexture(url);
+    planet.listElevationWWW.Add (www);
+    yield return www.Send();  
+    if(www.isError) {  
+        LoadingElevation = false;
+        yield break;
+    }  
+
+    tex = new Texture2D(256,256);
+    tex.wrapMode = TextureWrapMode.Clamp;
+    tex.LoadImage(www.downloadHandler.data);
+}
+```
+
+## Unity两中方式加载图片
+```
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System.IO;
+
+public class readPictures : MonoBehaviour
+{
+
+
+    private Image image;
+    private string loadpath = "D:/SOmeOther/NGUI/Assets/StreamingAssets/test.jpg"; //IO方式加载的路径
+    private string picpathWWW = "test.jpg"; //WWW的加载方式路径
+
+    // Use this for initialization
+    private void Start()
+    {
+        image = GetComponent<Image>();
+        //IO方法加载速度快
+//        LoadByIO();
+        //WWW 加载速度慢
+        LoadByWWW();
+
+    }
+
+    private void LoadByIO()
+    {
+        double startTime = (double) Time.time;
+        //创建文件流
+        FileStream fileStream = new FileStream(loadpath, FileMode.Open, FileAccess.Read);
+        fileStream.Seek(0, SeekOrigin.Begin);
+        //创建文件长度的缓冲区
+        byte[] bytes = new byte[fileStream.Length];
+        //读取文件
+        fileStream.Read(bytes, 0, (int) fileStream.Length);
+        //释放文件读取liu
+        fileStream.Close();
+        fileStream.Dispose();
+        fileStream = null;
+
+        //创建Texture
+        int width = 300;
+        int height = 372;
+        Texture2D texture2D = new Texture2D(width, height);
+        texture2D.LoadImage(bytes);
+
+        Sprite sprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height),
+            new Vector2(0.5f, 0.5f));
+        image.sprite = sprite;
+        double time = (double) Time.time - startTime;
+        Debug.Log("IO加载用时：" + time);
+    }
+
+
+    private void LoadByWWW()
+    {
+        StartCoroutine(Load());
+    }
+
+
+    private string url = "file://D:/SOmeOther/NGUI/Assets/StreamingAssets/";
+//    private string url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502532130856&di=7135149ed906483861efdfc9770def3b&imgtype=0&src=http%3A%2F%2Fwww.newasp.net%2Fattachment%2Fsoft%2F2017%2F0811%2F144057_83971519.png"; 这里当然可以换做网络图片的URL 就加载网络图片了
+    private IEnumerator Load()
+    {
+        double startTime = (double) Time.time;
+
+        WWW www = new WWW(url + picpathWWW);//只能放URL
+//        WWW www = new WWW(url);//只能放URL 这里可以换做网络的URL
+        yield return www;
+        if (www!=null && string.IsNullOrEmpty(www.error))
+        {
+
+            Texture2D texture = www.texture;
+            //创建 Sprite
+            Sprite sprite = Sprite.Create(texture,new Rect(0,0,texture.width,texture.height),new Vector2(0.5f,0.5f) );
+
+            image.sprite = sprite;
+            double time = (double)Time.time - startTime;
+            Debug.Log("WWW加载用时：" + time);
+        }
+    }
+
+
+}
+```
+
+
+## Assetbundle加载
+```
+AssetBundle.LoadFromFile()
+```
+
+## Unity中AssetBundle的打包和加载
+
+[BuildAssetBundlesBuildMapExample](https://docs.unity3d.com/ScriptReference/BuildPipeline.BuildAssetBundles.html)
+
+[Unity中AssetBundle的打包和加载](https://blog.csdn.net/beihuanlihe130/article/details/76216072)
+
+[Unity 5.3 Assetbundle热更资源](https://blog.csdn.net/l_jinxiong/article/details/50877926)
+
+[Unity5 AssetBundle系列——基本流程](https://www.cnblogs.com/sifenkesi/p/6880068.html)
+
+## Unity 2017版本的Assetbundle 打包
+
+[Unity3D研究院之Assetbundle的原理](http://www.xuanyusong.com/archives/2373)
+
+```
+听说2017的版本的Assetbundle更新了，这次本着实验下的心态来测试下新版本的打包到底有哪些功能，大家可能知道，Unity的每次更新都是本着简化操作，简化代码的原则进行集中管理和迭代，废话不多说，来看看新版本都有哪些吧。
+
+   1：打包：新版本的打包只有一种方法：BuildPipeline.BuildAssetBundles（）;
+
+     方法里有2个重载：（1）BuildPipeline.BuildAssetBundles（string outpath,BuildAssetBundleOptions assetbundleOptions,BuildTarget  target）
+
+    string outpath:打包后路径
+
+    BuildAssetBundleOptions：以什么方式去打包，具体可查看相对应的官方文档
+
+    BuildTarget ：打包的目标平台
+
+    这种打包是将Editor符合一定条件下的所有资源进行打包
+
+        （2） BuildPipeline.BuildAssetBundles（string outpath,AssetBundle[] assetbundle,BuildAssetBundleOptions assetbundleOptions,BuildTarget  target）                               第二种方法里多了一个AssetBundle[] 的这个参数，这种打包是将你选择的资源进行打包。
+
+    关于这个参数我研究了一下，这个是结构体参数，你们用f12可以导过去，结构体又2个重要必须赋值的属性，assetbundle.assetNames和assetbundle.assetBundleName 。
+
+ 话不多说，下面直接上代码让大家更直观的看到他们的使用方式：
+
+    /// <summary>
+    /// 将符合条件的全部分包打包（基本没什么卵用）
+    /// </summary>
+    /// 
+    [MenuItem("Tool/GreatBundle")]
+    static void GreatBundle()
+    {
+        Object[] selects = Selection.objects;
+        foreach (Object item in selects)
+        {
+            Debug.Log(item);
+            BuildPipeline.BuildAssetBundles(Application.dataPath + "/StreamingAssets/Manany", BuildAssetBundleOptions.None, BuildTarget.Android);
+            AssetDatabase.Refresh();//打包后刷新，不加这行代码的话要手动刷新才可以看得到打包后的Assetbundle包
+        }
+    }
+    /// <summary>
+    /// 将选定的多个游戏对象打包一个
+    /// </summary>
+    /// 
+    [MenuItem("Tool/GreatAllBundle")]
+    static void GreatAllBundle() {
+        AssetBundleBuild[] builds = new AssetBundleBuild[1];
+        Object[] selects = Selection.GetFiltered(typeof(Object),SelectionMode.DeepAssets);
+        string[] TestAsset = new string[selects.Length];
+        for (int i = 0; i < selects.Length; i++)
+        {
+            TestAsset[i] = AssetDatabase.GetAssetPath(selects[i]);
+            Debug.Log(TestAsset[i]);
+        }
+        builds[0].assetNames = TestAsset;
+        builds[0].assetBundleName = selects[0].name;
+        BuildPipeline.BuildAssetBundles(Application.dataPath + "/StreamingAssets/One",builds, BuildAssetBundleOptions.None, BuildTarget.Android);
+        AssetDatabase.Refresh();
+    }
+
+    对了，还有个换统一名字的编辑器扩展，这里也给奉上
+
+    [MenuItem("Tool/SetAssetBundleNameExtension")]  //将选定的资源进行统一设置AssetBundle名
+    static void SetBundleName() {
+        Object[] selects = Selection.objects;
+        foreach (Object item in selects)
+        {
+            string path = AssetDatabase.GetAssetPath(item);
+            AssetImporter asset = AssetImporter.GetAtPath(path);
+            asset.assetBundleName = item.name;//设置Bundle文件的名称
+            asset.assetBundleVariant = "asset";//设置Bundle文件的扩展名
+            asset.SaveAndReimport();
+        }
+        AssetDatabase.Refresh();
+    }
+
+对了，这是个编辑器扩展的工具脚本，脚本一定要放在Editor文件夹下且继承Editor，如有不懂的欢迎留言，一起研究，有错的也希望大家提下，共同进步
+```
+
 ## 自动布局组件
 容器添加Layout Group组件
 子对象可以添加Layout Element组件设置最小尺寸
