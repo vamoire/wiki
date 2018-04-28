@@ -3,6 +3,22 @@
 http://www.4399.com/flash/190144_1.htm
 http://www.4399.com/flash/190981_3.htm
 
+## operator运算符重载 类型运算符重载 类型隐式转换运算符
+```
+//当重载==后，要求必须重载!=  
+public static bool operator ==(Object x, Object y);
+public static bool operator !=(Object x, Object y);
+//隐式类型转换
+public static implicit operator bool(Object exists);
+public static implicit operator string(Object exists);
+//运算符
+public static int operator -(Object x, Object y);
+//当重载>后，要求必须重载< 
+public static int operator >(Object x, Object y);
+public static int operator >(Object x, Object y);
+```
+
+
 ## 提取游戏资源
 [提取游戏资源](http://www.xuanyusong.com/archives/3618)
 

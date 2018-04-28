@@ -1,4 +1,60 @@
 # C# #
+## 字符串操作
+
+[字符串操作总结](https://www.cnblogs.com/junbird-nest/archive/2012/03/23/2413482.html)
+
+## 字符串拆分 Split
+```
+string str="abc#def#hijkl#mn";
+string[] s = str.Split(new char[] { '#' });
+```
+
+## 字符串替换
+```
+s ="A_B_C_D";
+Console.WriteLine(s.Replace('_', '-')); // 把字符串中的'_'字符替换为'-'，输出"A-B-C-D"
+Console.WriteLine(s.Replace("_", "")); // 把字符串中的"_"替换为空字符串，输出"A B C D"
+
+```
+
+## 字符串大小写
+```
+Console.WriteLine(s.ToLower()); // 转化为小写，输出"abcd"
+Console.WriteLine(s.ToUpper()); // 转化为大写，输出"ABCD"
+```
+
+## 运算符
+[C# 运算符 Operator](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-conditional-operators)
+
+## 运算符 ?. and ?[] Operators
+```
+//?. and ?[] Operators
+//用于在执行成员访问之前测试对象或者数组是否为NULL
+//这些运算符有助于编写更少的代码来处理空检查，尤其是用于降级到数据结构中。
+
+int? length = customers?.Length; // null if customers is null   
+Customer first = customers?[0];  // null if customers is null  
+int? count = customers?[0]?.Orders?.Count();  // null if customers, the first customer, or Orders is null
+```
+
+## 运算符 ?? Operator
+```
+int? x = null;
+
+// Set y to the value of x if x is NOT null; otherwise,
+// if x == null, set y to -1.
+int y = x ?? -1;
+
+// Assign i to return value of the method if the method's result
+// is NOT null; otherwise, if the result is null, set i to the
+// default value of int.
+int i = GetNullableInt() ?? default(int);
+
+string s = GetStringValue();
+// Display the value of s if s is NOT null; otherwise, 
+// display the string "Unspecified".
+Console.WriteLine(s ?? "Unspecified");
+```
 
 ## 数组合并 List合并
 ```
