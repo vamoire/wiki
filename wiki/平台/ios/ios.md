@@ -1,5 +1,6 @@
 # iOS
-
+## 应用评论地址
+itms-apps://itunes.apple.com/cn/app/id680440912?mt=8&action=write-review
 ## 应用下载地址
 https://itunes.apple.com/app/id680440912
 
