@@ -3,6 +3,175 @@
 http://www.4399.com/flash/190144_1.htm
 http://www.4399.com/flash/190981_3.htm
 
+## 添加iOS库
+```
+using UnityEngine;
+using UnityEditor;
+using UnityEditor.Callbacks;
+using UnityEditor.iOS.Xcode; // ←Xcode接口
+using System.Collections;
+using System.IO;
+ 
+public class XcodeProjectMod : MonoBehaviour
+{
+ 
+    // 小实用函数（http://goo.gl/fzYig8参考）
+    internal static void CopyAndReplaceDirectory(string srcPath, string dstPath)
+    {
+        if (Directory.Exists(dstPath))
+            Directory.Delete(dstPath);
+        if (File.Exists(dstPath))
+            File.Delete(dstPath);
+ 
+        Directory.CreateDirectory(dstPath);
+ 
+        foreach (var file in Directory.GetFiles(srcPath))
+            File.Copy(file, Path.Combine(dstPath, Path.GetFileName(file)));
+ 
+        foreach (var dir in Directory.GetDirectories(srcPath))
+            CopyAndReplaceDirectory(dir, Path.Combine(dstPath, Path.GetFileName(dir)));
+    }
+ 
+    [PostProcessBuild]
+    public static void OnPostprocessBuild(BuildTarget buildTarget, string path)
+    {
+        if (buildTarget == BuildTarget.iPhone)
+        {
+            string projPath = PBXProject.GetPBXProjectPath(path);
+            PBXProject proj = new PBXProject();
+            
+            proj.ReadFromString(File.ReadAllText(projPath));
+            string target = proj.TargetGuidByName("Unity-iPhone");
+ 
+            // 添加系统框架
+            proj.AddFrameworkToProject(target, "AssetsLibrary.framework", false);
+            
+            // 添加自己的框架
+            CopyAndReplaceDirectory("Assets/Lib/mylib.framework", Path.Combine(path, "Frameworks/mylib.framework"));
+            proj.AddFileToBuild(target, proj.AddFile("Frameworks/mylib.framework", "Frameworks/mylib.framework", PBXSourceTree.Source));
+ 
+            // 添加文件
+            var fileName = "my_file.xml";
+            var filePath = Path.Combine("Assets/Lib", fileName);
+            File.Copy(filePath, Path.Combine(path, fileName));
+            proj.AddFileToBuild(target, proj.AddFile(fileName, fileName, PBXSourceTree.Source));
+ 
+            // 以Yosemitt为IPa无法写入的错误的设定
+            proj.SetBuildProperty(target, "CODE_SIGN_RESOURCE_RULES_PATH", "$(SDKROOT)/ResourceRules.plist");
+ 
+            // 设定/追加框架的搜索路径
+            proj.SetBuildProperty(target, "FRAMEWORK_SEARCH_PATHS", "$(inherited)");
+            proj.AddBuildProperty(target, "FRAMEWORK_SEARCH_PATHS", "$(PROJECT_DIR)/Frameworks");
+            
+            // 写出来
+            File.WriteAllText(projPath, proj.WriteToString());
+        }
+    }
+}
+```
+[iOS.Xcode.PBXProject](http://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html)
+[Unity3D研究院之5.x自带API打包xcode添加framework、plist](http://www.xuanyusong.com/archives/4026)
+[hatenablog](http://cflat-inc.hatenablog.com/entry/2015/01/05/074442)
+[Unity-Technologies / XcodeAPI — Bitbucket](https://bitbucket.org/Unity-Technologies/xcodeapi)
+
+
+## 启动外部程序
+```
+//启动外部程序时：直接使用Process.Start();来启动外部程序，参数（需要启动的外部程序所在文件位置）
+
+//关闭外部程序时：使用 process.Kill();来关闭外部程序
+private string exePath;  
+
+void Start()  
+{  
+    exePath = @"C:\Windows\System32\calc.exe";  
+}  
+    
+void OnGUI()  
+{  
+    if (GUI.Button(new Rect(100, 100, 150, 50), "Start Cale"))  
+    {  
+        Process.Start(exePath);  
+    }  
+
+    if (GUI.Button(new Rect(100, 200, 150, 50), "Stop Cale"))  
+    {  
+        KillProcess("Calculator");  
+    }  
+}  
+
+void KillProcess(string processName)  
+{  
+    Process[] processes = Process.GetProcesses();  
+    foreach (Process process in processes)  
+    {  
+        try  
+        {  
+            if (!process.HasExited)  
+            {  
+                if (process.ProcessName == processName)  
+                {  
+                    process.Kill();  
+                    UnityEngine.Debug.Log("已杀死进程");  
+                }  
+            }  
+        }  
+        catch (System.InvalidOperationException  ex)  
+        {  
+            UnityEngine.Debug.Log(ex);  
+        }  
+    }  
+}  
+```
+
+Vungle调用python脚本
+```
+//VunglePostBuilder.cs
+[PostProcessBuild( 800 )]
+private static void onPostProcessBuildPlayer( BuildTarget target, string pathToBuiltProject )
+{
+    #if UNITY5_SCRIPTING_IN_UNITY4
+        if( target == BuildTarget.iPhone )
+    #else
+        if( target == BuildTarget.iOS )
+    #endif
+    {
+        postBuildDirectory = pathToBuiltProject;
+
+        // grab the path to the postProcessor.py file
+        var scriptPath = Path.Combine( Application.dataPath, "Editor/Vungle/VunglePostProcessor.py" );
+
+        // sanity check
+        if( !File.Exists( scriptPath ) )
+        {
+            UnityEngine.Debug.LogError( "Vungle post builder could not find the VunglePostProcessor.py file. Did you accidentally delete it?" );
+            return;
+        }
+
+        var pathToNativeCodeFiles = Path.Combine( Application.dataPath, "Editor/Vungle/VungleSDK" );
+
+        var args = string.Format( "\"{0}\" \"{1}\" \"{2}\"", scriptPath, pathToBuiltProject, pathToNativeCodeFiles );
+        var proc = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = "python",
+                Arguments = args,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true
+            }
+        };
+
+        proc.Start();
+        proc.WaitForExit();
+
+        UnityEngine.Debug.Log( "Vungle post processor completed" );
+    }
+}
+```
+
+
 ## operator运算符重载 类型运算符重载 类型隐式转换运算符
 ```
 //当重载==后，要求必须重载!=  
