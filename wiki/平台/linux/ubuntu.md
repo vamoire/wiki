@@ -1,5 +1,12 @@
 # Ubuntu
 
+## libpcre2-8-0
+[libpcre2-8-0](https://packages.ubuntu.com/xenial/libpcre2-8-0)
+
+## 改源
+[ubuntu 把软件源修改为国内源和更新](https://www.cnblogs.com/flyinggod/p/7979108.html)
+
+
 ## VMware安装虚拟机Ubuntu提示piix4_smbus:Host SMBus错误解决办法
 
 错误： ubuntu开机出现错误提示：piix4_smbus 0000:00:007.3: Host SMBus controller not enabled
