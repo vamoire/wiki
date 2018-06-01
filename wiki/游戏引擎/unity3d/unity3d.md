@@ -3,6 +3,26 @@
 http://www.4399.com/flash/190144_1.htm
 http://www.4399.com/flash/190981_3.htm
 
+## 友盟分享
+
+友盟分享不显示分享面板
+[参考1](https://developer.umeng.com/docs/66632/detail/67033?um_channel=sdk)
+[参考2](http://dev.umeng.com/social/ios/%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3#3_3)
+```
+//重新设置分享面板父容器
+
+//1.UnityAppController实现UMSocialShareMenuViewDelegate协议
+
+-(UIView *)UMSocialParentView:(UIView *)defaultSuperView {
+    return self.rootView;
+}
+
+//2.在UMSocialCSDK.mm  [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:] 前添加
+[UMSocialUIManager setShareMenuViewDelegate:[UnityAppController share]];
+
+```
+
+
 ## 添加iOS库
 ```
 using UnityEngine;
