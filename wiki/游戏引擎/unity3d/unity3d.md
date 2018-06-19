@@ -3,6 +3,15 @@
 http://www.4399.com/flash/190144_1.htm
 http://www.4399.com/flash/190981_3.htm
 
+## 视频播放 VideoPlayer
+```
+1.资源中创建RenderTexture
+2.场景中添加VideoPlayer并绑定RenderTexture
+3.场景中添加RawImage并绑定到RenderTexture
+4.调整RawImage的尺寸及位置到合适的位置
+```
+[代码实现播放](http://www.shijunzh.com/archives/584)
+
 ## 友盟分享
 
 友盟分享不显示分享面板
