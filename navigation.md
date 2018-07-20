@@ -43,6 +43,8 @@
 
 [C#](wiki/语言/cshap/cshap.md)
 
+[Lua](wiki/语言/lua/lua.md)
+
 [BUG](wiki/工作日常/bug.md)
 
 [分享](wiki/工作日常/分享.md)
