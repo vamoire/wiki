@@ -50,3 +50,7 @@
 [分享](wiki/工作日常/分享.md)
 
 [工作计划](wiki/工作日常/工作计划.md)
+
+[CSS](wiki/语言/css/css.md)
+
+[Web](wiki/Web/web.md)
