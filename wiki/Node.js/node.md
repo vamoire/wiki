@@ -5,6 +5,9 @@
 npm install（i） pagejson_name //下载的格式 本地模式  末尾加-g (--global) 就是全局模式
 
 npm uninstall  pagejson_name //删除的格式  末尾加-g (--global) 就是全局模式
+
+npx ......  //新版本命令
+
 ```
 
 ## 模块 Module
